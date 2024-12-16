@@ -115,8 +115,20 @@
 .w15{
     width: 15vmax;
 }
+.w18{
+    width: 18vmax;
+}
+.w20{
+    width: 20vmax;
+}
 .w26{
     width: 26vmax;
+}
+.w29{
+    width: 29;
+}
+.w30{
+    width: 30vmax;
 }
 .w60{
     width: 60vmax;
@@ -126,6 +138,9 @@
 }
 .w72{
     width: 72vmax;
+}
+.w74{
+    width: 74vmax;
 }
 .w80{
     width: 80vmax;
@@ -189,6 +204,9 @@
 }
 .h35{
     height: 35vmax;
+}
+.h37{
+    height: 37vmax;
 }
 .h45{
     height: 45vmax;
@@ -318,6 +336,15 @@
 }
 .t_1{
     top: 1vmax;
+}
+.mt_1{
+    margin-top: 1vmax;
+}
+.mt_2{
+    margin-top: 2vmax;
+}
+.mt_3{
+    margin-top: 3vmax;
 }
 .mt_5{
     margin-top: 5vmax;
@@ -505,4 +532,12 @@ li::marker{
     top: 8vmax;
     left: 17vmax;
     width: 6vmax ;
+}
+.search_course{
+    background-color: #54339e;
+    color: white;
+}
+.search_course:hover{
+    background-color: #d0c4df;
+    color: #54339e;
 }

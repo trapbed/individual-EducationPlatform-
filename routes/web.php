@@ -21,7 +21,7 @@ use App\Http\Controllers\UserController;
 //     return view('welcome');
 // });
 Route::get('/', [CourseController::class, 'main'])->name('main');
-Route::get('/courses', [CourseController::class, 'main_courses'])->name('courses');
+Route::get('/courses/{search?}/{category?}/{order?}', [CourseController::class, 'main_courses'])->name('courses');
 
 Route::middleware('no_auth')->group(function(){
     Route::get('/login', function(){return view('login');})->name('login');

@@ -3,7 +3,7 @@
 @section('title', 'Главная')
 @section('content')
 <!-- hello block -->
-    <div class="df frd_r jc_spb ali_e h32 g3">
+    <div class="df frd_r jc_spb ali_e h37 g3">
         <img class="w18" src="{{asset('img/student.png')}}" alt="syudent">
         <div class="df fdr_c g3 w69 h28">
             <h1 class="c_dp ff_mr fsz_2_3">Учись вместе с нами</h1>

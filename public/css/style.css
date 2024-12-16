@@ -124,6 +124,9 @@
 .w12{
     width: 12vmax;
 }
+.w14{
+    width: 14vmax;
+}
 .w15{
     width: 15vmax;
 }
@@ -133,6 +136,9 @@
 .w20{
     width: 20vmax;
 }
+.w25{
+    width: 25vmax;
+}
 .w26{
     width: 26vmax;
 }
@@ -141,6 +147,9 @@
 }
 .w30{
     width: 30vmax;
+}
+.w35{
+    width: 35vmax;
 }
 .w60{
     width: 60vmax;
@@ -156,6 +165,9 @@
 }
 .w80{
     width: 80vmax;
+}
+.w87_5{
+    width: 87.5vmax;
 }
 .w94{
     width: 94vmax;
@@ -184,11 +196,26 @@
 .h100{
     height: 100%;
 }
+.mx_w_34{
+    max-width: 34vmax;
+} 
+.mn_w_34{
+    min-width: 34vmax;
+} 
+.mx_h10{
+    max-height: 10vmax;
+} 
+.mn_h_4{
+    min-height: 4vmax;
+}
 .h1_5{
     height: 1.5vmax;
 }
 .h2{
     height: 2vmax;
+}
+.h2_2{
+    height: 2.2vmax;
 }
 .h2_5{
     height: 2.5vmax;
@@ -316,6 +343,9 @@
 .paa_2{
     padding: 2vmax;
 }
+.pb_1{
+    padding-bottom: 1vmax;
+}
 .input_p{
     padding: 0.5vmax 1vmax;
 }
@@ -396,6 +426,21 @@
 .t_m_2_5{
     top: -2.5vmax;
 }
+.mtm_1{
+    margin-top: -1vmax;
+}
+.mtm_1_5{
+    margin-top: -1.5vmax;
+}
+.mtm_1_7{
+    margin-top: -1.7vmax;
+}
+.mtm_2{
+    margin-top: -2vmax;
+}
+.mt_0_5{
+    margin-top: 0.5vmax;
+}
 .mt_1{
     margin-top: 1vmax;
 }
@@ -404,6 +449,9 @@
 }
 .mt_3{
     margin-top: 3vmax;
+}
+.mt_4{
+    margin-top: 4vmax;
 }
 .mt_5{
     margin-top: 5vmax;
@@ -437,6 +485,14 @@
 .btn_purple:hover{
     background-color: #54339e;
     color: aliceblue;
+}
+.btn_dp_lp{
+    background-color: #54339e;
+    color: white;
+}
+.btn_dp_lp:hover{
+    background-color: #d0c4df;
+    color: #54339e;
 }
 .td_u{
     text-decoration: underline;

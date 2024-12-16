@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Category;
 
+use Auth;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CourseController extends Controller
         $old_order = "";
         // dump($request);
         $header = 'Все курсы';
-        $all_access_courses = DB::table('courses')->select('courses.id','categories.title as category','courses.title','description','courses.image' ,'users.name as author', 'student_count', 'test')->where('access','=', '1');
+        $all_access_courses = DB::table('courses')->select('courses.id','categories.title as category','courses.title','description','courses.image' ,'users.name as author', 'student_count', 'test', 'courses.created_at', 'courses.access')->where('access','=', '1');
 
         
         if($request->search){
@@ -39,6 +40,9 @@ class CourseController extends Controller
             $old_cat = $request->category;
             $category = $request->category;
             $all_access_courses = $all_access_courses->where('categories.id', '=', $category);
+        }
+        if(Auth::user()->role == 'author'){
+            $all_access_courses = $all_access_courses->where('author', '=', Auth::user()->id);
         }
 
         if($request->category && $request->search){
@@ -60,8 +64,12 @@ class CourseController extends Controller
         $all_access_courses = $all_access_courses->get();
 
         $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
-        
-        return view('courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
+        if(Auth::user()->role == 'author'){
+            return view('author/courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
+        }
+        else{
+            return view('courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
+        }
         
     }
     public function one_course_main($id_course){
@@ -82,7 +90,7 @@ class CourseController extends Controller
         ->JOIN('users','users.id','=', 'courses.author')
         ->JOIN('categories','categories.id','=','courses.category')->get();
         // dd(count($courses));
-        return view('admin/courses', ['courses'=>$courses])->withInputs();
+        return view('admin/courses', ['courses'=>$courses]);
     }
 
     public function change_access_course($access, $id_course){
@@ -98,5 +106,11 @@ class CourseController extends Controller
             return back()->with(['mess'=>'Не удалось изменить доступ!', 'courses'=>$courses]);
         }
         // return response()->json($request);
+    }
+
+    function update_course($id){
+        $categories = Category::select('id', 'title')->get();
+        $course = Course::select('id','category','title','description','image')->where('id','=', $id)->get()[0];
+        return view('author/update_course', ['categories'=>$categories, 'course'=>$course]);
     }
 }

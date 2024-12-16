@@ -19,7 +19,7 @@ class AuthorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user()->role != 'author') {
-            return back()->session(['mess'=>'Вам не доступна эта страница!']); // Перенаправляем на страницу ошибки
+            return back()->with(['mess'=>'Вам не доступна эта страница!']); // Перенаправляем на страницу ошибки
         }
 
         // Если всё в порядке, передаём запрос дальше

@@ -62,7 +62,8 @@ Route::middleware('auth')->group(function(){
     
 
     Route::middleware('author')->group(function(){
-        Route::get('/author/courses', function(){return view('author/courses');})->name('main_author');
+        Route::get('/author/courses', [CourseController::class, 'main_courses'])->name('main_author');
+        Route::get('admin/update_course/{id_course}', [CourseController::class, 'update_course'])->name('update_course');
     });
 });
 

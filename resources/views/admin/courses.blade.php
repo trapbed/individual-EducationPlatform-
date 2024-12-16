@@ -3,10 +3,11 @@
 @section('title', 'Курсы')
 @section('content')
 
+<div class="df fdr_r g2 pos_f bg_w"><a class="lh_3 fsz_1_5 td_n" href="">Курсы</a><a class="lh_3 fsz_1_5 td_n" href="">Заявки</a></div>
 
 
 @if (count($courses)>0)
-    <table class="table ">
+    <table class="table mt_4">
         <thead>
             <tr class="fsz_1">
                 <td>Название</td>

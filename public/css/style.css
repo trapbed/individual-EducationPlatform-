@@ -52,6 +52,9 @@
 .g2{
     gap: 2vmax;
 }
+.g2_5{
+    gap: 2.5vmax;
+}
 .g3{
     gap: 3vmax;
 }
@@ -93,6 +96,15 @@
 }
 .w7{
     width: 7vmax;
+}
+.w8{
+    width: 8vmax;
+}
+.w8_5{
+    width: 8.5vmax;
+}
+.w9{
+    width: 9vmax;
 }
 .w12{
     width: 12vmax;
@@ -187,8 +199,17 @@
 .h5{
     height: 5vmax;
 }
+.h6{
+    height: 6vmax;
+}
+.h7{
+    height: 7vmax;
+}
 .h8{
     height: 8vmax;
+}
+.h9{
+    height: 9vmax;
 }
 .h10{
     height: 10vmax;
@@ -227,7 +248,7 @@
     font-size: 1.5vmax;
 }
 .fsz_2{
-    font-size: 1.5vmax;
+    font-size: 2vmax;
 }
 .fsz_2_3{
     font-size: 2.3vmax;
@@ -280,6 +301,9 @@
 .jc_spa{
     justify-content: space-around;
 }
+.pdng_course{
+    padding: 4vmax 1vmax 1vmax 1vmax;
+}
 .paa_0_3{
     padding: 0.3vmax;
 }
@@ -297,6 +321,9 @@
 }
 .ptb_0_5{
     padding: 0.5vmax 0;
+}
+.ptb_1{
+    padding: 1vmax 0;
 }
 .plr_1{
     padding: 0 1vmax;
@@ -340,6 +367,15 @@
 .b_1{
     bottom: 1vmax;
 }
+.b_2{
+    bottom: 2vmax;
+}
+.b_3{
+    bottom: 3vmax;
+}
+.b_4{
+    bottom: 4vmax;
+}
 .t_0{
     top: 0;
 }
@@ -348,6 +384,17 @@
 }
 .t_1{
     top: 1vmax;
+}.t_2{
+    top: 2vmax;
+}
+.t_m_1_5{
+    top: -1.5vmax;
+}
+.t_m_2{
+    top: -2vmax;
+}
+.t_m_2_5{
+    top: -2.5vmax;
 }
 .mt_1{
     margin-top: 1vmax;
@@ -448,6 +495,7 @@
 .h18{
     height: 18vmax;
 }
+
 .min_h34{
     min-height: 34vmax;
 }
@@ -558,4 +606,10 @@ li::marker{
 .search_course:hover{
     background-color: #d0c4df;
     color: #54339e;
+}
+.h_wt_lp{
+    background-color: white;
+}
+.h_wt_lp:hover{
+    background-color: #d0c4df;
 }

@@ -28,7 +28,7 @@
     </div>
 <!-- popular courses-->
     <div class="df fdr_c ali_c w94_9 g4  ">
-        <h3 class="fsz_2 ff_mr c_dp">Популярные курсы</h3>
+        <h3 class="fsz_1_5 ff_mr c_dp">Популярные курсы</h3>
         <div class="df fdr_r w100 jc_spa">
             @foreach ($courses as $course)
             <a class="df fdr_c brc_lp br_03 hover_block_lg_lp w16 paa_1 g1 ">

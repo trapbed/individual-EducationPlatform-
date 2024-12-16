@@ -36,18 +36,37 @@
             $count = 1;
         ?>
         @foreach ($courses as $course)
-        
+            <?php
+                $image = 'img/courses/';
+                if($course->image){
+                    $image.=$course->image;
+                }
+                else{
+                    $image.= 'default.png';
+                }
+            ?>
             @if($count == 1)
-                <div class="df fdr_r jc_spb">
+                <div class="df fdr_r g3">
             @endif
-                <div class="w20 paa_1 df fdr_c g1 bg_lp_a40">
-                    {{$course->title}}
+            <div class=" df fdr_c ptb_1 pos_r">
+                <img class="h5 t0 l0 als_c pos_a t_m_1_5" src="{{asset($image)}}" alt="">
+
+                <div class="w20 pdng_course  df fdr_c g1  br_1 brc_lp  ">
+                    
+                    <h6 class="fsz_1 ff_mr c_dp">{{$course->title}}</h6>
+                    <div class="df dfr_r jc_spb">
+                        <span class="paa_0_3 ff_ml c_w fsz_0_8 bg_dp br_03 w_a ">{{$course->category}}</span>
+                        <span class="fsz_0_8 ff_mr c_dp als_e">Автор: {{$course->author}}</span>
+                    </div>
+                    <span class="h4 fsz_0_8 ff_mr c_dp">{{$course->description}}</span>
+                    <a class="paa_0_5 brc_lp fsz_1 ff_mr w_a br_1 btn_purple td_n" href="{{route('one_course_main', $course->id)}}">Подробнее</a>
+                    {{--{{$course->title}}
                     {{$course->description}}
                     {{$course->category}}
                     {{$course->title}}
-                    {{$course->title}} 
+                    {{$course->title}} --}}
                 </div>
-                
+            </div>
             @if($count%3 == 0)
             </div>
             <?php $count = 0; ?>
@@ -56,6 +75,7 @@
                 <?php $count++;?>
         @endforeach
     @endif
-    <div class="w100 h1"></div>
 </div>
+
+<div class="w100 h1"></div>
 @endsection

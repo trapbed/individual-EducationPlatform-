@@ -64,6 +64,19 @@ class CourseController extends Controller
         return view('courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
         
     }
+    public function one_course_main($id_course){
+        $info_course = Course::select('courses.id', 'courses.title', 'categories.title as category','description','image','users.name as author','student_count', 'test')->where('courses.id','=', $id_course)
+        ->join('users', 'users.id', '=', 'courses.author')
+        ->join('categories', 'categories.id', '=', 'courses.category');
+
+        if($info_course->exists() == true){
+            $info_course= $info_course->get()[0];
+            return view('one_course', ['title'=>$info_course->title, 'course'=>$info_course, 'id'=>$id_course]);
+        }
+        else{
+            return redirect()->route('courses');
+        }
+    }
     public function get_all_admin(){
         $courses = Course::select('courses.id as course_id','courses.title as course_title','categories.title as category_title', 'description', 'users.name as author','access','test', 'courses.created_at')
         ->JOIN('users','users.id','=', 'courses.author')

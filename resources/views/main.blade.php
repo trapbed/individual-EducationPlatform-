@@ -41,7 +41,7 @@
     </div>
 
 <!-- Start Education -->
-    <div class="w72 als_c df fdr_r ali_c g6 pos_r">
+    <div class="w72 h40 als_c df fdr_r ali_c g6 pos_r">
         <img class="pos_a  image1" src="{{asset('img/i1.png')}}" alt="">
         <img class="pos_a  image2" src="{{asset('img/i2.png')}}" alt="">
         <img class="pos_a  image3" src="{{asset('img/i3.png')}}" alt="">

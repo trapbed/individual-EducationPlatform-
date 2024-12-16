@@ -208,11 +208,20 @@
 .h37{
     height: 37vmax;
 }
+.h40{
+    height: 40vmax;
+}
 .h45{
     height: 45vmax;
 }
 .fsz_1{
     font-size: 1vmax;
+}
+.fsz_1_2{
+    font-size: 1.2vmax;
+}
+.fsz_1_4{
+    font-size: 1.4vmax;
 }
 .fsz_1_5{
     font-size: 1.5vmax;
@@ -231,6 +240,9 @@
 }
 .lh_1_5{
     line-height: 1.5vmax;
+}
+.lh_3{
+    line-height: 3vmax;
 }
 .ac_c{
     align-content: center;
@@ -397,6 +409,9 @@
 .c_dg{
     color: #325b1e;
 }
+.c_gr{
+    color: rgba(128, 128, 128, 0.666);
+}
 .bg_beige{
     background-color: #f1e0d7;
 }
@@ -432,6 +447,9 @@
 }
 .h18{
     height: 18vmax;
+}
+.min_h34{
+    min-height: 34vmax;
 }
 #main_login{
     display: flex;

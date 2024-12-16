@@ -39,7 +39,7 @@
             @endauth
         </div>
     </nav>
-    <div class=" mt_1 df fdr_c g5">
+    <div class="min_h34 mt_1 df fdr_c g1">
     @yield('content')
     </div>
     </div>

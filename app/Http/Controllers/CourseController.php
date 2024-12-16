@@ -24,30 +24,32 @@ class CourseController extends Controller
         $old_cat = "";
         $old_order = "";
         // dump($request);
-        $all_access_courses = DB::table('courses')->select('courses.id','categories.title as category','courses.title','description', 'users.name as author', 'student_count', 'test')->where('access','=', '1');
-        // if($search || $category || $order){
-        //     dump($search, $category, $order);
-        // }
+        $header = 'Все курсы';
+        $all_access_courses = DB::table('courses')->select('courses.id','categories.title as category','courses.title','description','courses.image' ,'users.name as author', 'student_count', 'test')->where('access','=', '1');
+
         
         if($request->search){
+            $header = "Поиск '".$request->search."'";
             $old_search = $request->search;
-            // dump($category);
             $all_access_courses = $all_access_courses->where('courses.title','LIKE', '%'.$request->search.'%');
         }
         if($request->category){
-            // dump($request);
+            $name_cat = Category::select('title')->where('id', '=', $request->category)->get()[0]->title;
+            $header = "Курсы по категории '".$name_cat."'";
             $old_cat = $request->category;
             $category = $request->category;
             $all_access_courses = $all_access_courses->where('categories.id', '=', $category);
         }
+
+        if($request->category && $request->search){
+            $header = "Курсы по категории '".$name_cat."' с поиском '".$request->search."'";
+        }
         $all_access_courses = $all_access_courses->join('categories', 'categories.id', '=', 'courses.category')->join('users', 'users.id', '=', 'courses.author');
         
-        $abc = "no";
         $order_by = $request->order;
 
         if($request->order != 'access DESC' && $request->order!=null){
             $old_order = $request->order;
-            $abc = "yes";
             $order_by = explode(" ", $order_by);
             $all_access_courses = $all_access_courses->orderBy($order_by[0], $order_by[1]);
         }
@@ -55,12 +57,11 @@ class CourseController extends Controller
             $all_access_courses = $all_access_courses->orderBy('student_count', 'DESC');
         }
         
-        // dd(explode(" ", $order_by));
         $all_access_courses = $all_access_courses->get();
 
         $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
         
-        return view('courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order]);
+        return view('courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
         
     }
     public function get_all_admin(){

@@ -59,7 +59,7 @@
                         <span class="fsz_0_8 ff_mr c_dp als_e">Автор: {{$course->author}}</span>
                     </div>
                     <span class="h4 fsz_0_8 ff_mr c_dp">{{$course->description}}</span>
-                    <a class="paa_0_5 brc_lp fsz_1 ff_mr w_a br_1 btn_purple td_n" href="{{route('one_course_main', $course->id)}}">Подробнее</a>
+                    <a class="paa_0_5 brc_lp fsz_1 ff_mr w_a br_1 btn_purple td_n c_dp" href="{{route('one_course_main', $course->id)}}">Подробнее</a>
                     {{--{{$course->title}}
                     {{$course->description}}
                     {{$course->category}}

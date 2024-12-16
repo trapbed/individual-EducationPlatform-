@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'author' => \App\Http\Middleware\AuthorMiddleware::class,
         'student' => \App\Http\Middleware\StudentMiddleware::class,
         'no_auth' => \App\Http\Middleware\NoAuthMiddleware::class,
+        'no_admin_no_author' => \App\Http\Middleware\NoAuthMiddleware::class,
     ];
 }

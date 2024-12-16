@@ -51,7 +51,7 @@ class AuthController extends Controller
             ]);
             Auth::login($user);
             if(Auth::user()->role == 'student'){
-                return redirect()->route('main_student');
+                return redirect()->route('main');
 
             }
             else if(Auth::user()->role == 'author'){
@@ -73,7 +73,7 @@ class AuthController extends Controller
             if(Hash::check($request->pass, $pass)){
                 Auth::login( User::find($id));
                 if(Auth::user()->role == 'student'){
-                    return redirect()->route('student_account');
+                    return redirect()->route('main');
     
                 }
                 else if(Auth::user()->role == 'author'){

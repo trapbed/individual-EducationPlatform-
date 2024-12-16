@@ -3,6 +3,16 @@
 @section('title', $title)
 @section('content')
 
+    <?php
+        $image = 'img/courses/';
+        if($course->image){
+            $image.=$course->image;
+        }
+        else{
+            $image.= 'default.png';
+        }
+    ?>
+
     <div class=" w74 h4"></div>
     <div class="w74 df fdr_r jc_spb ">
         <div class="df fdr_c  g1_5">
@@ -13,7 +23,7 @@
             <a class="ff_mr btn_purple w8_5 td_n brc_lp" href="">Начать изучать</a>
         </div>
         <div class="w18">
-            <img class="paa_1 w18" src="{{asset('img/courses/'.$course->image)}}" alt="">
+            <img class="paa_1 w18" src="{{asset($image)}}" alt="">
         </div>
     </div>
     

@@ -20,9 +20,12 @@ use App\Http\Controllers\UserController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [CourseController::class, 'main'])->name('main');
-Route::get('/courses/{search?}/{category?}/{order?}', [CourseController::class, 'main_courses'])->name('courses');
-Route::get('/one_course_main/{id_course}', [CourseController::class, 'one_course_main'])->name('one_course_main');
+Route::middleware('no_admin_no_author')->group(function(){
+    Route::get('/', [CourseController::class, 'main'])->name('main');
+    Route::get('/courses/{search?}/{category?}/{order?}', [CourseController::class, 'main_courses'])->name('courses');
+    Route::get('/one_course_main/{id_course}', [CourseController::class, 'one_course_main'])->name('one_course_main');
+});
+    
 
 Route::middleware('no_auth')->group(function(){
     Route::get('/login', function(){return view('login');})->name('login');
@@ -38,6 +41,7 @@ Route::middleware('no_auth')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     
+
     Route::middleware('admin')->group(function(){
         Route::get('admin/main', [UserController::class, 'all_users_admin'])->name('main_admin');
         Route::get('admin/courses', [CourseController::class, 'get_all_admin'])->name('courses_admin');
@@ -58,7 +62,7 @@ Route::middleware('auth')->group(function(){
     
 
     Route::middleware('author')->group(function(){
-        Route::get('/main_author', function(){return view('main');})->name('main_author');
+        Route::get('/author/courses', function(){return view('author/courses');})->name('main_author');
     });
 });
 

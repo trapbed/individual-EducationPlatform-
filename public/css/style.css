@@ -83,6 +83,9 @@
 .w1_5{
     width: 1.5vmax;
 }
+.w1_7{
+    width: 1.7vmax;
+}
 .w2{
     width: 2vmax;
 }
@@ -170,6 +173,9 @@
 .w35{
     width: 35vmax;
 }
+.w50{
+    width: 50vmax;
+}
 .w60{
     width: 60vmax;
 }
@@ -184,6 +190,12 @@
 }
 .w80{
     width: 80vmax;
+}
+.w82{
+    width: 82vmax;
+}
+.w84{
+    width: 84vmax;
 }
 .w87{
     width: 87vmax;
@@ -232,6 +244,9 @@
 }
 .h1_5{
     height: 1.5vmax;
+}
+.h1_7{
+    height: 1.7vmax;
 }
 .h2{
     height: 2vmax;
@@ -413,6 +428,7 @@
 .pos_a{
     position: absolute;
 }
+
 .b_0{
     bottom: 0vmax;
 }
@@ -421,6 +437,9 @@
 }
 .b_2{
     bottom: 2vmax;
+}
+.b_2_3{
+    bottom: 2.3vmax;
 }
 .b_3{
     bottom: 3vmax;
@@ -487,8 +506,14 @@
 .r_1_5{
     right: 1.5vmax;
 }
+.r_10{
+    right: 10vmax;
+}
 .l_0{
     left: 0vmax;
+}
+.rm_5{
+    right: -5vmax;
 }
 .lm_1_5{
     left: -1.5vmax;
@@ -516,6 +541,15 @@
     background-color: #d0c4df;
     color: #54339e;
 }
+
+.btn_lp_dp{
+    background-color: #d0c4df;
+    color: #54339e;
+}
+.btn_lp_dp:hover{
+    background-color: #54339e;
+    color: #d0c4df;
+}
 .td_u{
     text-decoration: underline;
 }
@@ -533,6 +567,9 @@
 }
 .c_dg{
     color: #325b1e;
+}
+.c_lp{
+    color: #d0c4df;
 }
 .c_gr{
     color: rgba(128, 128, 128, 0.666);
@@ -690,4 +727,11 @@ li::marker{
 }
 .h_wt_lp:hover{
     background-color: #d0c4df;
+}
+.input_create{
+    border-radius: 0.3vmax;
+    border: 0.15vmax solid #d0c4df;
+    padding: 0.5vmax;
+    width: 50vmax;
+    height: 6vmax;
 }

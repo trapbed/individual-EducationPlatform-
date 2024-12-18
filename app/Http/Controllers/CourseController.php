@@ -133,8 +133,9 @@ class CourseController extends Controller
         $count_lessons = $lessons->count();
         return view('author/one_course', ['course'=>$course, 'lessons'=>$lessons, 'count_lessons'=>$count_lessons]);
     }
-
+// AUTHOR
     public function data_for_create_course($id){
-        
+        $course = Course::select('courses.*', DB::raw('COUNT(lessons.id) as lesson_count'))->where('courses.id', '=', $id)->leftJoin('lessons', 'lessons.course_id', '=', 'courses.id')->groupBy('courses.id')->get()[0];
+        return view('author/create_lesson', ['course'=>$course]);
     }
 }

@@ -7,7 +7,7 @@
                 <h4 class="fsz_1_5 ff_ml c_dp ">Редактирование курса &nbsp;'{{$course->title}}'</h4>
             </div>
 
-            <form class="df fdr_c g1" action="{{}}" method="POST">
+            <form class="df fdr_c g1" action="" method="POST">
                 @csrf
                 <div class="df fdr_c g1">
                     <label class="ff_mr fsz_1_2 c_dp" for="title">Заголовок</label>

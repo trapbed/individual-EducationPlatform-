@@ -26,7 +26,11 @@
     </form>
 </div>
 
-<span class="fsz_1_4 ff_m c_dp h3 lh_3">{{$header}}</span>
+<div class="df fdr_r jc_spb  paa_0_5">
+    <span class="fsz_1_4 ff_m c_dp h3 lh_3">{{$header}}</span>
+    <span class="ff_ml fsz_1">Результатов: {{$count_courses}}</span>
+</div>
+
 
 <div class="df fdr_c g3 w100 ">
     @if($count_courses == 0)

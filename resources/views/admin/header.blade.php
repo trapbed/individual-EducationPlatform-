@@ -22,13 +22,9 @@
     @endif 
 
     @if ($errors->any())
-        <div class="errors_absolute">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        @foreach ($errors->all() as $error)
+            <script>alert("{{$error}}");</script>
+        @endforeach
     @endif
 
     <div class="container_my df fdr_r ali_c g3 pos_f">

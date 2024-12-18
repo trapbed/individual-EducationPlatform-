@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class NoAdminNoAuthorMIddleware
+class NoAuthNoAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class NoAdminNoAuthorMIddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role == 'admin' || Auth::user()->role == 'author') {
+        if (Auth::check() == true && (Auth::user()->role == 'admin' || Auth::user()->role == 'author')) {
             // if(Auth::user()->role == 'student'){
             //     return redirect()->route(Auth::user()->role.'_account')->with(['mess'=>'Вы не можете перейти на эту старницу.']); // Перенаправляем на страницу ошибки
             // }

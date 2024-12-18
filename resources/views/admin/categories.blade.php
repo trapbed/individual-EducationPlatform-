@@ -12,7 +12,7 @@
       <span class="fsz_1 c_dp">Создание категории курса</span>
       <form class="df fdr_c g1 ali_e paa_2" action="{{route('create_category')}}" method="POST">
         @csrf
-        <input class="w16 h1_5 paa_0_5 fsz_0_8 br_03 ou_n brc_lp" name="title" type="text">
+        <input class="w16 h1_5 paa_0_5 ff_mr fsz_0_8 br_03 ou_n brc_lp" name="title" type="text">
 
 
         <input class="paa_0_3 br_03 c_w fsz_1 bg_dp ou_n" type="submit" value="Создать">
@@ -37,15 +37,6 @@
         <tbody>
             @foreach ($categories as $category)
             <?php
-                  // dd($category);
-            ?>
-            <?php
-                // $status = $user->blocked == '1' ? 'Заблокирован' : 'Разблокирован';
-                // $action = $user->blocked == '1' ? 'Разблокировать' : 'Заблокировать';
-                // $color_btn = $user->blocked == '1' ? 'bg_lg' : 'bg_lr';
-                // $bg_color_btn = $user->blocked == '1' ? 'c_dg' : 'c_dr';
-                // $to = $user->blocked == '1' ? '0' : '1';
-                // $arr_role = ['admin', 'student'];
 
                 $color_btn = $category->exist == '1' ? 'bg_lr' : 'bg_lg';
                 $bg_color_btn = $category->exist == '1' ? 'c_dr' : 'c_dg';
@@ -57,7 +48,10 @@
                 <tr class=" fsz_1 h3 f_w300 ff_mr">
                     <td>{{$category->title}}</td>
                     <td>{{$exist}}</td>
-                    <td><a class="fsz_0_8 br_03 ff_mr  td_n paa_0_3 {{$color_btn}} {{$bg_color_btn}}" href="{{route('change_exist_category', ['exist'=>$action, 'id'=>$category->id])}}">{{$title}}</a></td>
+                    <td class="df fdr_r ali_e g2 h3">
+                        <a class="fsz_0_8 br_03 ff_mr h1_5 td_n paa_0_3 w7 {{$color_btn}} {{$bg_color_btn}}" href="{{route('change_exist_category', ['exist'=>$action, 'id'=>$category->id])}}">{{$title}}</a>
+                        <a href="{{route('edit_cat_show', $category->id)}}"><img class="w1_5 h1_5" src="{{asset('img/pen.png')}}" alt="change"></a>
+                    </td>
                 </tr>
                 
             @endforeach
@@ -65,7 +59,7 @@
     </table>
 @else
     
-    <div class="fsz_1">Пока нет ни одного курса.</div>
+    <div class="fsz_1">Пока нет ни одной категории.</div>
     
 @endif
 

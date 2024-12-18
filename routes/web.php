@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function(){
         Route::get('change_role/{id_user}/{id_appl}/{role}/{status_appl}', [UserController::class, 'change_role'])->name('change_role');
         Route::get('admin/categories_admin', [CategoryController::class, 'categories_admin'])->name('categories_admin');
         Route::post('/create_category', [CategoryController::class, 'create_category'])->name('create_category');
+        Route::get('/admin/edit_cat_show/{id}', [CategoryController::class, 'edit_cat_show'])->name('edit_cat_show');
+        Route::post('/admin/edit_cat', [CategoryController::class, 'edit_cat'])->name('edit_cat');
         Route::get('change_exist_category/{exist}/{id}', [CategoryController::class, 'change_exist_category'])->name('change_exist_category');
     });    
     

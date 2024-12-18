@@ -10,14 +10,10 @@
     <!-- <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> -->
 </head>
 <body class="">
-@if (isset($mess))
-<div class="errors_absolute">
-        <ul>
-            @foreach ($mess as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <script>alert("{{$error}}");</script>
+    @endforeach
 @endif
 <div class="df fdr_c g2 ali_c w98_9vx  pos_r ">
     <nav class="df fdr_r ali_c pos_f w94_9 h4 bg_lp t2 br_rb_0_5 br_lb_0_5 jc_spb plr_1">

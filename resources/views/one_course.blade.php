@@ -20,7 +20,7 @@
             <span class="paa_0_5 bg_dp w_a br_03 ff_mr c_w fsz_0_8">{{$course->category}}</span>
             <span class="fsz_1 ff_mr c_dp">{{$course->description}}</span>
             <span class="fsz_1 ff_mr c_dp">Учащихся: {{$course->student_count}}</span>
-            <a class="ff_mr btn_purple w8_5 td_n brc_lp" href="">Начать изучать</a>
+            <a class="ff_mr btn_purple w8_5 td_n brc_lp fsz_1" href="">Начать изучать</a>
         </div>
         <div class="w18">
             <img class="paa_1 w18" src="{{asset($image)}}" alt="">

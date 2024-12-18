@@ -66,36 +66,42 @@ class AuthController extends Controller
     }
     public function login_db(Request $request){
         $user_check = User::where('email', '=', $request->email)->exists();
-        if($user_check){
-            $user = User::select('id', 'email', 'password')->where('email', '=', $request->email)->get()[0];
-            $pass = $user->password;
-            $id = $user->id;
-            if(Hash::check($request->pass, $pass)){
-                Auth::login( User::find($id));
-                if(Auth::user()->role == 'student'){
-                    return redirect()->route('main');
-    
+        if(strlen(trim($request->email))!= 0 && strlen(trim($request->pass))!=0){
+            if($user_check){
+                $user = User::select('id', 'email', 'password')->where('email', '=', $request->email)->get()[0];
+                $pass = $user->password;
+                $id = $user->id;
+                if(Hash::check($request->pass, $pass)){
+                    Auth::login( User::find($id));
+                    if(Auth::user()->role == 'student'){
+                        return redirect()->route('main');
+        
+                    }
+                    else if(Auth::user()->role == 'author'){
+                        return redirect()->route('main_author');
+        
+                    }
+                    else if(Auth::user()->role == 'admin'){
+                        return redirect()->route('main_admin');
+        
+                    }
                 }
-                else if(Auth::user()->role == 'author'){
-                    return redirect()->route('main_author');
-    
-                }
-                else if(Auth::user()->role == 'admin'){
-                    return redirect()->route('main_admin');
-    
+                else{
+                    return back()->withErrors([
+                        'pass'=>'Неверный пароль'
+                    ])->withInput();
                 }
             }
             else{
                 return back()->withErrors([
-                    'pass'=>'Неверный пароль'
+                    'email'=>'Нет такого пользователя'
                 ])->withInput();
             }
         }
         else{
-            return back()->withErrors([
-                'email'=>'Нет такого пользователя'
-            ])->withInput();
+            return back()->withErrors(['empty'=>'Заполните все поля!'])->withInput();
         }
+        
     }
     public function logout(){
             Auth::logout();

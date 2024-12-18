@@ -31,7 +31,7 @@ class CategoryController extends Controller
         ];
         $validate = Validator::make($data, $rules, $messages);
         if($validate->fails()){
-            dd($validate);
+            // dd($validate);
             return redirect('admin/categories_admin')
             ->withErrors($validate)
             ->withInput();
@@ -84,5 +84,41 @@ class CategoryController extends Controller
             ->withInput();
         }
         // dd($exist, $id);
+    }
+
+    public function edit_cat_show($id){
+        $cat_info = Category::select('*')->where('id','=', $id)->get()[0];
+        return view('admin/edit_cat', ['cat'=>$cat_info]);
+    }
+    public function edit_cat(Request $request){
+        $data = [
+            'title'=>$request->title
+        ];
+        $rules = [
+            'title'=>'required|min:6|unique:categories'
+        ];
+        $messages = [
+            'title.required'=>'Заполните поле!',
+            'title.min'=>'Минимальная длина названия- 6 символов',
+            'title.unique'=>'Название должно быть уникальным!'
+        ];
+        $validate = Validator::make($data, $rules, $messages);
+        if($validate->fails()){
+            return redirect('admin/edit_cat_show/'.$request->id)
+            ->withErrors($validate)
+            ->withInput();
+        }
+        else{
+            $update = Category::where('id', '=', $request->id)->update([
+                'title'=>$request->title
+            ]);
+            if($update){
+                return redirect('admin/categories_admin')->withErrors(['success'=>'Успешное изменение категории!']);
+            }
+            else{
+                return redirect('admin/edit_cat_show/'.$request->id)->withErrors(['error'=>'Не удалось изменить данные!'])->withInput();
+            }
+        }
+        // $edit_cat = '';
     }
 }

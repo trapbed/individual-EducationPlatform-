@@ -21,7 +21,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role != 'admin') {
+        if (Auth::check() == false && Auth::user()->role != 'admin') {
             // return view('/', ['mess'=>'Для перехода на страницу необходимо зарегистрироваться!']);
             return back()->withErrors(['auth'=>'Вам не доступна эта страница!']); // Перенаправляем на страницу ошибки
         }

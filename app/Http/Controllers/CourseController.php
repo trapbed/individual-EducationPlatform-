@@ -41,7 +41,7 @@ class CourseController extends Controller
             $category = $request->category;
             $all_access_courses = $all_access_courses->where('categories.id', '=', $category);
         }
-        if(Auth::user()->role == 'author'){
+        if(Auth::check()== true && Auth::user()->role == 'author'){
             $all_access_courses = $all_access_courses->where('author', '=', Auth::user()->id);
         }
 
@@ -64,7 +64,7 @@ class CourseController extends Controller
         $all_access_courses = $all_access_courses->get();
 
         $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
-        if(Auth::user()->role == 'author'){
+        if(Auth::check()==true && Auth::user()->role == 'author'){
             return view('author/courses', ['courses'=> $all_access_courses, 'categories'=>$categories, 'count_courses'=>$all_access_courses->count(), 'old_search'=>$old_search, "old_cat"=>$old_cat, 'old_order'=>$old_order, 'header'=>$header]);
         }
         else{

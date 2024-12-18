@@ -29,39 +29,39 @@
     </div>
     <div class="df fdr_c w80 mt_4 g2 bg_w">
         @if($count_courses > 0)
-        <table class="table w87_5 ">
-            <thead class="w87">
-                <tr class="fsz_1 pos_f bg_w ff_m w87 mtm_1_7 h2_2">
-                    <td class="w25">Название</td>
-                    <td class="w10 ">Категория</td>
-                    <td class="w9">Описание</td>
-                    <td class="w7 ">Студенты</td>
-                    <td class="w12">Дата создания</td>
-                    <td class="w4 ">Тест</td>
-                    <td class="w5">Доступ</td>
-                    <td class="w14 ">Действия</td>
-                </tr>
-            </thead>
-            <tbody>
+        <!-- <table class="table w87_5 "> -->
+            <div class="w87">
+                <div class="df fdr_r fsz_1 pos_f bg_w ff_m w87 mtm_1_7 h2_2">
+                    <div class="w25 ">Название</div><!--w25-->
+                    <div class="w12 ">Категория</div><!--w10-->
+                    <div class="w7 ">Уроков</div><!--w7-->
+                    <div class="w7 ">Студенты</div><!--w7-->
+                    <div class="w5 ">Тест</div><!--w4-->
+                    <div class="w5 ">Доступ</div><!--w5-->
+                    <div class="w10 ">Подробнее</div><!--w5-->
+                    <div class="w15 bg_beige">Действия</div><!--w14-->
+                </div>
+            </div>
+            <div>
                 @foreach ($courses as $course)
-                <tr class="fsz_1 ff_mr h3 w87">
-                    <td class="w25">{{$course->title}}</td>
-                    <td class="w10">{{$course->category}}</td>
-                    <td class="w9">Подробнее</td>
-                    <td class="w7">{{$course->student_count}}</td>
-                    <td class="w12">{{$course->created_at}}</td>
+                <div class="df fdr_r fsz_1 ff_mr h3 w87">
+                    <div class="w25 ">{{$course->title}}</div>
+                    <div class="w12 ">{{$course->category}}</div>
+                    <div class="w7 ">{{$course->lesson_count}}</div>
+                    <div class="w7 ">{{$course->student_count}}</div>
                     <?php
                         $test = $course->test != null ? "&#10003;" : "";
                         $access = $course->access == '1' ? "&#10003;" : "";
                         $act1 = $course->access == "1" ? `Показать` : `Скрыть`;
                     ?>
-                    <td class="w4">{{html_entity_decode($test)}}</td>
-                    <td class="w5">{{html_entity_decode($access)}}</td>
-                    <td class="w14"><a class="ff_m fsz_0_8 c_dp w7  paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course', $course->id)}}">Редактировать</a></td>
-                </tr>
+                    <div class="w5 ">{{html_entity_decode($test)}}</div>
+                    <div class="w5 ">{{html_entity_decode($access)}}</div>
+                    <div class="w10 "><a class="ff_mr fsz_1 c_dp" href="{{route('author_more_info_course', $course->id)}}">Подробнее</a></div>
+                    <div class="w15 bg_beige"><a class="ff_m fsz_0_8 c_dp w7  paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course', $course->id)}}">Редактировать</a></div>
+                </div>
                 @endforeach
-            </tbody>
-        </table>
+            </div>
+        <!-- </table> -->
         @else
             <span class="fsz_1_2 ff_mr c_dp">Нет курсов</span>
         @endif

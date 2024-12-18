@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\Lesson;
 
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,17 @@ class CourseController extends Controller
         $old_order = "";
         // dump($request);
         $header = 'Все курсы';
-        $all_access_courses = DB::table('courses')->select('courses.id','categories.title as category','courses.title','description','courses.image' ,'users.name as author', 'student_count', 'test', 'courses.created_at', 'courses.access')->where('access','=', '1');
+        $all_access_courses = DB::table('courses')->select( 'courses.id',
+        'categories.title as category',
+        'courses.title',
+        'courses.description',
+        'courses.image',
+        'users.name as author',
+        'courses.student_count',
+        'courses.test',
+        'courses.created_at',
+        'courses.access',
+        DB::raw('COUNT(lessons.id) as lesson_count'))->where('access','=', '1');
 
         
         if($request->search){
@@ -48,7 +59,9 @@ class CourseController extends Controller
         if($request->category && $request->search){
             $header = "Курсы по категории '".$name_cat."' с поиском '".$request->search."'";
         }
-        $all_access_courses = $all_access_courses->join('categories', 'categories.id', '=', 'courses.category')->join('users', 'users.id', '=', 'courses.author');
+        $all_access_courses = $all_access_courses->join('categories', 'categories.id', '=', 'courses.category')
+                                                ->join('users', 'users.id', '=', 'courses.author')
+                                                ->leftJoin('lessons', 'lessons.course_id', '=', 'courses.id')->groupBy('courses.id');
         
         $order_by = $request->order;
 
@@ -112,5 +125,16 @@ class CourseController extends Controller
         $categories = Category::select('id', 'title')->get();
         $course = Course::select('id','category','title','description','image')->where('id','=', $id)->get()[0];
         return view('author/update_course', ['categories'=>$categories, 'course'=>$course]);
+    }
+    
+    public function author_more_info_course($id){
+        $course = Course::select('courses.id','courses.title', 'description', 'student_count', 'categories.title as category')->join('categories', 'courses.category', '=', 'categories.id')->where('courses.id', '=', $id)->get()[0];
+        $lessons = Lesson::select('*')->where('course_id', '=', $id)->get();
+        $count_lessons = $lessons->count();
+        return view('author/one_course', ['course'=>$course, 'lessons'=>$lessons, 'count_lessons'=>$count_lessons]);
+    }
+
+    public function data_for_create_course($id){
+        
     }
 }

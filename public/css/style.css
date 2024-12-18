@@ -70,6 +70,10 @@
 .w_a{
     width: min-content;
 }
+.w_au{
+    display: inline-block;
+    width: max-content;
+}
 .w99{
     width: 99vmax;
 }
@@ -94,6 +98,9 @@
 .w5{
     width: 5vmax;
 }
+.w6{
+    width: 6vmax;
+}
 .w7{
     width: 7vmax;
 }
@@ -109,6 +116,9 @@
 .w12{
     width: 12vmax;
 }
+.w12_2{
+    width: 12.2vmax;
+}
 .w16{
     width: 16vmax;
 }
@@ -121,9 +131,6 @@
 .w10{
     width: 10vmax;
 }
-.w12{
-    width: 12vmax;
-}
 .w14{
     width: 14vmax;
 }
@@ -135,6 +142,18 @@
 }
 .w20{
     width: 20vmax;
+}
+.w21{
+    width: 21vmax;
+}
+.w22{
+    width: 22vmax;
+}
+.w23{
+    width: 23vmax;
+}
+.w24{
+    width: 24vmax;
 }
 .w25{
     width: 25vmax;
@@ -165,6 +184,9 @@
 }
 .w80{
     width: 80vmax;
+}
+.w87{
+    width: 87vmax;
 }
 .w87_5{
     width: 87.5vmax;

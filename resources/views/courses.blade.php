@@ -59,7 +59,7 @@
                     
                     <h6 class="fsz_1 ff_mr c_dp">{{$course->title}}</h6>
                     <div class="df dfr_r jc_spb">
-                        <span class="paa_0_3 ff_ml c_w fsz_0_8 bg_dp br_03 w_a ">{{$course->category}}</span>
+                        <span class="paa_0_3 ff_ml c_w fsz_0_8 bg_dp br_03  ">{{$course->category}}</span>
                         <span class="fsz_0_8 ff_mr c_dp als_e">Автор: {{$course->author}}</span>
                     </div>
                     <span class="h4 fsz_0_8 ff_mr c_dp">{{$course->description}}</span>

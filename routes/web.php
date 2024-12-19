@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LessonController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function(){
         Route::get('admin/update_course/{id_course}', [CourseController::class, 'update_course'])->name('update_course');
         Route::get('/author_more_info_course/{id}', [CourseController::class, 'author_more_info_course'])->name('author_more_info_course');
         Route::get('/create_lesson_show/{id}', [CourseController::class, 'data_for_create_course'])->name('create_lesson_show');
+        Route::post('/create_lesson', [LessonController::class, 'create_lesson'])->name('create_lesson');
     });
 });
 

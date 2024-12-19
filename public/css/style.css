@@ -37,6 +37,9 @@
 .df{
     display: flex;
 }
+.dn{
+    display: none;
+}
 .fdr_r{
     flex-direction: row;
 }
@@ -173,8 +176,14 @@
 .w35{
     width: 35vmax;
 }
+.w48{
+    width: 48vmax;
+}
 .w50{
     width: 50vmax;
+}
+.wmx_50{
+    max-width: 50vmax;
 }
 .w60{
     width: 60vmax;
@@ -278,8 +287,23 @@
 .h10{
     height: 10vmax;
 }
+.h12{
+    height: 12vmax;
+}
+.h16{
+    height: 16vmax;
+}
+.h20{
+    height: 20vmax;
+}
+.h24{
+    height: 24vmax;
+}
 .h28{
     height: 28vmax;
+}
+.h30{
+    height: 30vmax;
 }
 .h32{
     height: 32vmax;
@@ -455,7 +479,8 @@
 }
 .t_1{
     top: 1vmax;
-}.t_2{
+}
+.t_2{
     top: 2vmax;
 }
 .t_m_1_5{
@@ -519,7 +544,7 @@
     left: -1.5vmax;
 }
 .oy_s{
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .sc_w_th{
     scrollbar-width: thin;
@@ -734,4 +759,8 @@ li::marker{
     padding: 0.5vmax;
     width: 50vmax;
     height: 6vmax;
+}
+form#preview> div >img{
+    width: 50vmax;
+    position: relative;
 }

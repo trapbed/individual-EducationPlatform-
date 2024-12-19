@@ -131,6 +131,7 @@ class CourseController extends Controller
     public function author_more_info_course($id){
         $course = Course::select('courses.id','courses.title', 'description', 'student_count', 'categories.title as category')->join('categories', 'courses.category', '=', 'categories.id')->where('courses.id', '=', $id)->get()[0];
         $lessons = Lesson::select('*')->where('course_id', '=', $id)->get();
+        // dd($lessons);
         $count_lessons = $lessons->count();
         return view('author/one_course', ['course'=>$course, 'lessons'=>$lessons, 'count_lessons'=>$count_lessons]);
     }

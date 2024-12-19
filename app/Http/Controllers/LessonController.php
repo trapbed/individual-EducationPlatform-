@@ -26,21 +26,17 @@ class LessonController extends Controller
         foreach($imgs as $img){
             if(gettype($img) == 'array'){
                 foreach($img as $key=>$value){
-                    dump($key);
                     $value->move(public_path()."/img/lessons", $value->getClientOriginalName());
                     $array_data[$key] = ["img"=>$value->getClientOriginalName()];
-                    dump($value->getClientOriginalName());
                 }
             }
         }
         ksort($array_data);
-
         $array_data = json_encode($array_data);
-
         $create = Lesson::insert([
             'title'=>$title,
             'course_id'=>$id,
-            'content'=>$array_data
+            'content'=>($array_data)
         ]);
         if($create){
             return redirect('author_more_info_course/'.$id)->withErrors(['success'=>'Урок создан!']);
@@ -49,5 +45,22 @@ class LessonController extends Controller
             return redirect('author_more_info_course/'.$id)->withErrors(['error'=>'Не удалось создать урок!']);
         }
         
+    }
+
+    public function one_lesson($id){
+        $one_lesson = Lesson::select('lessons.id', 'lessons.title', 'courses.title as course', 'content')->join('courses', 'courses.id', '=', 'lessons.course_id')->where('lessons.id', '=', $id)->get()[0];
+        $content = array( json_decode(($one_lesson->content)));
+        $array_content = [];
+        foreach($content as $key=>$value){
+            foreach($value as $a=>$b){
+                dump($a);
+                $array_content[$a] =get_object_vars($b);
+            }
+        }
+        dump($array_content);
+        // dd($content);
+        // dd($one_lesson);
+// @extends('author.header')resources/views/author/one_lesson.blade.php
+        return view('author/one_lesson',  ['lesson'=>$one_lesson, 'content'=>$array_content]);
     }
 }

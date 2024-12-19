@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/author_more_info_course/{id}', [CourseController::class, 'author_more_info_course'])->name('author_more_info_course');
         Route::get('/create_lesson_show/{id}', [CourseController::class, 'data_for_create_course'])->name('create_lesson_show');
         Route::post('/create_lesson', [LessonController::class, 'create_lesson'])->name('create_lesson');
+        Route::get('/one_lesson/{id}', [LessonController::class, 'one_lesson'])->name('one_lesson');
     });
 });
 

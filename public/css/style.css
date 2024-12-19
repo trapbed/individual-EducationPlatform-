@@ -46,6 +46,9 @@
 .fdr_c{
     flex-direction: column;
 }
+.g0_5{
+    gap: 0.5vmax;
+}
 .g1{
     gap: 1vmax;
 }
@@ -168,7 +171,7 @@
     width: 26vmax;
 }
 .w29{
-    width: 29;
+    width: 29vmax;
 }
 .w30{
     width: 30vmax;

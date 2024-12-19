@@ -28,14 +28,19 @@
     
     <div class="df fdr_c g1">
         <span class="fsz_1_7 ff_m c_dp">Уроки</span>
+        <a class="ff_mr fsz_1 btn_dp_lp w_au paa_0_5 br_03 td_n" href="{{route('create_lesson_show', $course->id)}}">Добавить урок</a>
+
         @if ($count_lessons == 0)
             <span class="fsz_1 ff_mr">Нет уроков</span>
         @else
-            <div>
-                {{$lessons->id}}
-            </div>
+        <ul class="df fdr_c g0_5 ff_mr fsz_1">
+            @foreach ($lessons as $lesson)
+                <li class="df fdr_r jc_spb w48">
+                    <span>{{$lesson->title}}</span> <div class="df fdr_r g1"><a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="{{route('one_lesson', $lesson->id)}}">Смотреть</a> <a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="">Удалить</a></div>
+                </li>
+            @endforeach
+        </ul>
         @endif
-        <a class="ff_mr fsz_1 btn_dp_lp w_au paa_0_5 br_03 td_n" href="{{route('create_lesson_show', $course->id)}}">Добавить урок</a>
     </div>
 
     

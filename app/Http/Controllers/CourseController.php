@@ -22,6 +22,8 @@ class CourseController extends Controller
         return view('main', ['courses'=>$newest_course]);
     }
 // courses
+
+    
     public function main_courses(Request $request){
         $old_search = "";
         $old_cat = "";
@@ -29,17 +31,22 @@ class CourseController extends Controller
         // dump($request);
         $header = 'Все курсы';
         $all_access_courses = DB::table('courses')->select( 'courses.id',
-        'categories.title as category',
-        'courses.title',
-        'courses.description',
-        'courses.image',
-        'users.name as author',
-        'courses.student_count',
-        'courses.test',
-        'courses.created_at',
-        'courses.access',
-        DB::raw('COUNT(lessons.id) as lesson_count'))->where('access','=', '1');
-
+            'categories.title as category',
+            'courses.title',
+            'courses.description',
+            'courses.image',
+            'users.name as author',
+            'courses.student_count',
+            'courses.test',
+            'courses.created_at',
+            'courses.access',
+            DB::raw('COUNT(lessons.id) as lesson_count'));
+        if(Auth::check()!= true || Auth::user()->role == 'student'){
+            $all_access_courses = $all_access_courses->where('access','=', '1');
+    
+        }
+        
+        
         
         if($request->search){
             $header = "Поиск '".$request->search."'";
@@ -86,6 +93,58 @@ class CourseController extends Controller
         }
         
     }
+
+    public function create_course_show(){
+        $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
+        return view('author/create_course_show', ['categories'=>$categories]);
+    }
+    public function create_course(Request $request){
+        $data = [
+            'title'=>$request->title ,
+            'category'=>$request->category ,
+            'description'=>$request->description ,
+            'image'=>$request->image ,
+        ];
+        $rules = [
+            'title'=>'required|min:1',
+            'category'=>'required',
+            'description'=>'required|min:1',
+            'image'=>'required|mimes:jpg,jpeg,png',
+        ];
+        $mess = [
+            'title.required'=>'Поле заголовок- обязательное',
+            'title.min'=>'Минимальная длина поля заголовок- 5 символов',
+            'category.required'=>'Выберите категорию',
+            'description.required'=>'Заполните описание',
+            'description.min'=>'Минимальная длина поля описание- 5 символов',
+            'image.required'=>'Выберите изображение',
+            'image.mimes'=>'Вы выбрали не изображение'
+        ];
+        $validate = Validator::make($data, $rules, $mess);
+        if($validate->fails()){
+            return back()
+            ->withErrors($validate)
+            ->withInput();
+        }
+        else{
+            $create = Course::insert([
+                'author'=>Auth::user()->id,
+                'title'=>$request->title,
+                'category'=>$request->category,
+                'description'=>$request->description,
+                'image'=>$request->file('image')->getClientOriginalName()
+            ]);
+            // dd($create);
+            if($create){
+                $image = $request->file('image')->getClientOriginalName();
+                $upload = $request->file('image')->move(public_path()."/img/courses/", $image);
+                return redirect()->route('main_author')->withErrors(['success'=>'Успешное создание курса!']);
+            }
+            else{
+                return back()->withErrors(['error'=>'Не удалось создать курс!'])->withInput();
+            }
+        }
+    }
     public function one_course_main($id_course){
         $info_course = Course::select('courses.id', 'courses.title', 'categories.title as category','description','image','users.name as author','student_count', 'test')->where('courses.id','=', $id_course)
         ->join('users', 'users.id', '=', 'courses.author')
@@ -122,12 +181,72 @@ class CourseController extends Controller
         // return response()->json($request);
     }
 
-    function update_course($id){
-        $categories = Category::select('id', 'title')->get();
+    function update_course_show($id){
+        $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
         $course = Course::select('id','category','title','description','image')->where('id','=', $id)->get()[0];
         return view('author/update_course', ['categories'=>$categories, 'course'=>$course]);
     }
     
+    public function update_course(Request $request){
+        // dump($request);
+        $data = [
+            'title'=>$request->title,
+            'category'=>$request->category,
+            'description'=>$request->description
+        ];
+        $rules = [
+            'title'=>'required|min:1',
+            'category'=>'required',
+            'description'=>'required|min:1',
+        ];
+        $mess = [
+            'title.required'=>"Поле заголовок- обязательное",
+            'title.min'=>"Минимальная длина поля заголовок- 5 символов",
+            'category.required'=>"Поле категория- обязательное",
+            'description.required'=>"Поле описание- обязательное",
+            'description.min'=>"Минимальная длина поля описание- 5 символов",
+        ];
+        if($request->image){
+            // dd($request->image);
+            // array_push($data, );
+            $data['image'] = $request->image;
+            $rules['image'] = 'mimes:jpg,jpeg,png';
+            $mess['image.mimes'] = 'Выбранный файл не изображение!';
+        }
+        $validate = Validator::make($data, $rules, $mess);
+        // dd($validate);
+        if($validate->fails()){
+            return redirect('author/update_course_show/'.$request->id_course)
+            ->withErrors($validate)
+            ->withInput();
+        }
+        else{
+            $update = Course::where('id', '=', $request->id_course)->update([
+                'title'=>$request->title, 
+                'category'=>$request->category,
+                'description'=>$request->description,
+            ]);
+            if($request->file()){
+                
+                $update = Course::where('id', '=', $request->id_course)->update([
+                    'image'=>$request->file('image')->getClientOriginalName()
+                ]);
+                $image = $request->file('image')->getClientOriginalName();
+                $upload = $request->file('image')->move(public_path()."/img/courses/", $image);
+            }
+            if($update){
+                $categories = Category::select('id', 'title')->get();
+                $course = Course::select('id','category','title','description','image')->where('id','=', $request->id_course)->get()[0];
+                return redirect('author/update_course_show/'.$request->id_course)->withErrors(['success'=>'Успешное обновление курсa']);
+            }
+            else{
+                $categories = Category::select('id', 'title')->get();
+                $course = Course::select('id','category','title','description','image')->where('id','=', $request->id_course)->get()[0];
+                return redirect('author/update_course_show/'.$request->id_course)->withErrors(['error'=>'Не удалось обновить курс']);
+            }
+        }
+    }
+
     public function author_more_info_course($id){
         $course = Course::select('courses.id','courses.title', 'description', 'student_count', 'categories.title as category')->join('categories', 'courses.category', '=', 'categories.id')->where('courses.id', '=', $id)->get()[0];
         $lessons = Lesson::select('*')->where('course_id', '=', $id)->get();

@@ -5,7 +5,7 @@
     <div class="pb_1 df fdr_r ali_c jc_spb g2  br_1 bg_w w87_5 pos_f mtm_1">
         <div class="df fdr_r g4 ali_c">
             <h4 class="fsz_1_5 ff_ml c_dp w10">Мои курсы</h4>
-            <div class="df ali_c jc_c br_03 w2_5 h2_5 btn_dp_lp w_a ff_m fsz_2 ">+</div>
+            <a href="{{route('create_course_show')}}" class="td_n df ali_c jc_c br_03 w2_5 h2_5 btn_dp_lp w_a ff_m fsz_2 ">+</a>
         </div>
         
         <form action="{{route('main_author')}}" method="GET" class="df fdr_r ali_c jc_spa g2">
@@ -39,7 +39,7 @@
                     <div class="w5 ">Тест</div><!--w4-->
                     <div class="w5 ">Доступ</div><!--w5-->
                     <div class="w10 ">Подробнее</div><!--w5-->
-                    <div class="w15 bg_beige">Действия</div><!--w14-->
+                    <div class="w15">Действия</div><!--w14-->
                 </div>
             </div>
             <div>
@@ -57,7 +57,7 @@
                     <div class="w5 ">{{html_entity_decode($test)}}</div>
                     <div class="w5 ">{{html_entity_decode($access)}}</div>
                     <div class="w10 "><a class="ff_mr fsz_1 c_dp" href="{{route('author_more_info_course', $course->id)}}">Подробнее</a></div>
-                    <div class="w15 bg_beige"><a class="ff_m fsz_0_8 c_dp w7  paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course', $course->id)}}">Редактировать</a></div>
+                    <div class="w15"><a class="ff_m fsz_0_8 c_dp w7  paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course_show', $course->id)}}">Редактировать</a></div>
                 </div>
                 @endforeach
             </div>

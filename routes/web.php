@@ -66,7 +66,10 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('author')->group(function(){
         Route::get('/author/courses', [CourseController::class, 'main_courses'])->name('main_author');
-        Route::get('author/update_course/{id_course}', [CourseController::class, 'update_course'])->name('update_course');
+        Route::get('/create_course_show', [CourseController::class,'create_course_show'])->name('create_course_show');
+        Route::post('/create_course', [CourseController::class,'create_course'])->name('create_course');
+        Route::get('author/update_course_show/{id_course}', [CourseController::class, 'update_course_show'])->name('update_course_show');
+        Route::post('/author/update_course', [CourseController::class, 'update_course'])->name('update_course');
         Route::get('/author_more_info_course/{id}', [CourseController::class, 'author_more_info_course'])->name('author_more_info_course');
         Route::get('/create_lesson_show/{id}', [CourseController::class, 'data_for_create_course'])->name('create_lesson_show');
         Route::post('/create_lesson', [LessonController::class, 'create_lesson'])->name('create_lesson');

@@ -16,7 +16,7 @@
     @if(isset($mess))
         <div class="errors_absolute">
             <ul>
-                <li>{{ $mess }}</li>
+                <li>{{ htmlspecialchars_decode($mess )}}</li>
             </ul>
         </div>
     @endif 

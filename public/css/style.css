@@ -73,6 +73,9 @@
 .g6{
     gap: 6vmax;
 }
+.g12{
+    gap: 12vmax;
+}
 .w_a{
     width: min-content;
 }
@@ -133,9 +136,6 @@
 }
 .w16_5{
     width: 16.5vmax;
-}
-.w18{
-    width: 18vmax;
 }
 .w10{
     width: 10vmax;

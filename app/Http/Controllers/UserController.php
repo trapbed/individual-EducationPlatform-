@@ -9,16 +9,71 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 use App\Models\UserApplication;
+use Validator;
 
 class UserController extends Controller
 {
     //
     public function account_info(){
-        $completed_c = Auth::user()->completed_courses;
-        $all_c = Auth::user()->all_courses;
-        return view('student/account');
+        $completed_c = count(json_decode(Auth::user()->completed_courses)->courses);
+        $all_c = count(json_decode(Auth::user()->all_courses)->courses);
+        // dump($completed_c, $all_c);
+        return view('student/account', ['all_c'=>$all_c, 'completed_c'=>$completed_c]);
     }
 
+    public function edit_account(Request $request){
+        $data = [
+            'name'=>$request->name,
+            'email'=>$request->email
+        ];
+        $rules = [
+            'name'=>'required|min:1',
+            'email'=>'required|email|min:6',
+        ];
+        $mess =[
+            'name.required'=>'Поле имя является обязательным!',
+            'name.min'=>'Минимальная длина имени- 1 символ!',
+            'email.required'=>'Поле почта- обязательное!',
+            'email.email'=>'Введите корректную почту!',
+            'email.min'=>'Минимальная длина почты- 6 символов',
+        ];
+        $validate = Validator::make($data, $rules, $mess);
+        if($validate->fails()){
+            return back()->withErrors($validate)->withInput();
+        }
+        else{
+            if($request->email != Auth::user()->email){
+                $check_email = User::select('*')->where('email', '=', $request->email)->get()->count();
+                if(!$check_email){
+                    $update = User::where('id', '=', Auth::user()->id)->update([
+                        'email'=>$request->email, 
+                        'name'=>$request->name
+                    ]);
+                }
+                else{
+                    return back()->withErrors(['success'=>'Пользователь с такой почтой уже есть!']);
+                }
+            
+                // dd($check_email);
+            }
+            else{
+                $update = User::where('id', '=', Auth::user()->id)->update([
+                    'name'=>$request->name,
+                    'email'=>$request->email
+                ]);
+            }
+            // if($request->name != Auth::user()->name){
+                
+            // }
+
+            if($update){
+                return back()->withErrors(['success'=>'Успешное обновление данных!']);
+            }
+            else{
+                return back()->withErrors(['error'=>'Не удалось обновить данные!']);
+            }
+        }
+    }
     public function all_users_admin(){
         $all_users = User::select('id','name','email','role','password', 'blocked')->get();
         return view('admin/main', ['users'=>$all_users]);

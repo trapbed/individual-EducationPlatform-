@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function(){
         Route::get('one_lesson_student/{id}/{course}', [LessonController::class, 'one_lesson_student'])->name('one_lesson_student');
         // Route::get('student/account', function(){return view('student/account');})->name('student_account');
         Route::get('student/account', [UserController::class, 'account_info'])->name('student_account');
+        Route::post('edit_account', [UserController::class,'edit_account'])->name('edit_account');
     });
 
     // $id_user, $id_appl, $role, $status_appl

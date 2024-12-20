@@ -66,11 +66,16 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('author')->group(function(){
         Route::get('/author/courses', [CourseController::class, 'main_courses'])->name('main_author');
-        Route::get('admin/update_course/{id_course}', [CourseController::class, 'update_course'])->name('update_course');
+        Route::get('author/update_course/{id_course}', [CourseController::class, 'update_course'])->name('update_course');
         Route::get('/author_more_info_course/{id}', [CourseController::class, 'author_more_info_course'])->name('author_more_info_course');
         Route::get('/create_lesson_show/{id}', [CourseController::class, 'data_for_create_course'])->name('create_lesson_show');
         Route::post('/create_lesson', [LessonController::class, 'create_lesson'])->name('create_lesson');
+        Route::get('/remove_lesson/{id_less}/{id_course}', [LessonController::class, 'remove_lesson'])->name('remove_lesson');
         Route::get('/one_lesson/{id}', [LessonController::class, 'one_lesson'])->name('one_lesson');
+
+        Route::post('/application_courses', [CourseController::class, 'application_courses'])->name('application_courses');
+        Route::post('/add_to_dir', [LessonController::class, 'add_to_dir'])->name('add_to_dir');
+        Route::get('/get_images_lesson', [LessonController::class, 'images_lesson'])->name('get_images_lesson');
     });
 });
 

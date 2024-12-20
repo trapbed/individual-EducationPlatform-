@@ -42,16 +42,11 @@
     </div>
 @endif
 
-
-
-@if (Session::has('mess'))
-    <div class="errors_absolute">
-        <ul>
-            <li>{{Session::get('mess') }}</li>
-        </ul>
-    </div>
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <script>alert("{{$error}}");</script>
+    @endforeach
 @endif
-
 
 </body>
 </html>

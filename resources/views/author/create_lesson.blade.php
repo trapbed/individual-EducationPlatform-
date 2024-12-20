@@ -3,13 +3,14 @@
 @section('title', "Создание урока  к курсу :'".$course->title."'")
 @section('content')
     <span class="ff_mr fsz_2">Создание урока к курсу : '{{$course->title}}'</span>
+    <span class="ff_mr fsz_1_2 c_lr">Выбирайте изображения исключительно из <span class="td_u">'img/lessons'</span>, предварительно загрузив их <a href="">в меню->второй раздел.</a></span>
     <span class="ff_mr fsz_1">Уже есть: {{$course->lesson_count}}</span>
     <div class="df fdr_r jc_spb pos_f bg_w b_2 w84  br_03">
         <form class="df fdr_r g1 w50 brc_lp br_03 paa_0_5" enctype="multipart/form-data">
             <div onclick="remove_disabled(event)" class="df ali_c jc_c btn_dp_lp ff_mr fsz_1 w2_5 h2_5 ou_n br_03">+</div>
             <button id="text" class=" ff_mr fsz_1 paa_0_5 ou_n br_03" disabled>Текст</button>
             <button id="img" class=" ff_mr fsz_1 paa_0_5 ou_n br_03" disabled>Изображение</button>
-            <input id="img_imitation" class=" ff_mr fsz_1 paa_0_5 ou_n br_03" type="file" style="display:none">
+            <input id="img_imitation" name="image" class=" ff_mr fsz_1 paa_0_5 ou_n br_03" type="file" style="display:none">
         </form>
 
         <button onclick="check_before_submit(event)"  class="btn_dp_lp br_03 paa_0_5 ou_n w_au ff_mr fsz_1">Создать урок</button>
@@ -89,8 +90,10 @@
         
         let count_2 = 1;
         $("#img_imitation").on("change", function(event){
+            event.preventDefault();
             // получаем выбранный файл
             let image = event.target.files[0];
+
             // если изображение
             if(image && image.type.startsWith('image/')){
                 // создаем скрытый инпут
@@ -99,14 +102,23 @@
                 new_i.setAttribute('id', 'img_'+count_2);
                 new_i.setAttribute('name', 'img['+all_count+']');
                 new_i.classList.add('dn', 'img_'+count_2, 'images');
+                new_i.value
                 $("#preview").append(new_i);
                 // создаем объект файл с именем изображения
-                let image_2 = new File(['image'], image.name);
+                let image_2 = new File(['image'], image.name, {
+                    type:image.type,
+                    webkitRelativePath: image.webkitRelativePath
+                });
+                console.log(image_2);
+
+
+                console.log($("#img_imitation").val());
 
                 // создаем объект dataTransfer, заносим в него выбранное изображение, присваиваем инпуту значение из объекта файл
                 let fileL = new DataTransfer();
                 fileL.items.add(image_2);
                 new_i.files = fileL.files;
+                console.log(new_i);
                 
                 // создание изображения, в котором будет превью
                 image_preview = document.createElement(`div`);
@@ -117,12 +129,15 @@
                 `;
                 $("#preview").append(image_preview);
 
-                // объект чтения файлов (вывод)
+
+
+                // // объект чтения файлов (вывод)
                 let reader = new FileReader();
                 reader.onload = () => image_preview.children[0].setAttribute('src', reader.result);
                 reader.readAsDataURL(image);
+                console.log(reader);
 
-                count_2++;
+                // // count_2++;
                 
                 $("#img_imitation").val('');
                 all_count++;

@@ -140,5 +140,9 @@ class CourseController extends Controller
         $course = Course::select('courses.*', DB::raw('COUNT(lessons.id) as lesson_count'))->where('courses.id', '=', $id)->leftJoin('lessons', 'lessons.course_id', '=', 'courses.id')->groupBy('courses.id')->get()[0];
         return view('author/create_lesson', ['course'=>$course]);
     }
+
+    public function application_courses(){
+        
+    }
     
 }

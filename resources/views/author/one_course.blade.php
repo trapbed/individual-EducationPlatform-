@@ -36,7 +36,7 @@
         <ul class="df fdr_c g0_5 ff_mr fsz_1">
             @foreach ($lessons as $lesson)
                 <li class="df fdr_r jc_spb w48">
-                    <span>{{$lesson->title}}</span> <div class="df fdr_r g1"><a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="{{route('one_lesson', $lesson->id)}}">Смотреть</a> <a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="">Удалить</a></div>
+                    <span>{{$lesson->title}}</span> <div class="df fdr_r g1"><a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="{{route('one_lesson', $lesson->id)}}">Смотреть</a> <a class="paa_0_5 fs_1 ff_mr btn_lp_dp td_n br_03" href="{{route('remove_lesson', ['id_less'=>$lesson->id, 'id_course'=>$course->id])}}">Удалить</a></div>
                 </li>
             @endforeach
         </ul>

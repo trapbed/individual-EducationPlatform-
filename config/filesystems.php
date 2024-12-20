@@ -29,7 +29,12 @@ return [
     */
 
     'disks' => [
-
+        'images'=>[
+            'driver'=>'local',
+            // 'root'=>"C:\ospanel\domains\project-ip\public\img\lessons",  
+            'root'=>storage_path('public/img'),  
+            'visibility'=>'public'
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

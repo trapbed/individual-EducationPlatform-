@@ -21,9 +21,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() == false && Auth::user()->role != 'admin') {
-            // return view('/', ['mess'=>'Для перехода на страницу необходимо зарегистрироваться!']);
-            return back()->withErrors(['auth'=>'Вам не доступна эта страница!']); // Перенаправляем на страницу ошибки
+        if (Auth::check() == false ) {
+            return redirect('login')->withErrors(['auth'=>'Вам не доступна эта страница!']); // Перенаправляем на страницу ошибки
+        }
+        else if(Auth::user()->role == 'author'){
+            return redirect(Auth::user()->role.'/courses')->withErrors(['middleware'=>'Вам не доступна эта страница!']);
+        }
+        else if(Auth::user()->role == 'student'){
+            return redirect('courses')->withErrors(['middleware'=>'Вам не доступна эта страница!']);
         }
 
         // Если всё в порядке, передаём запрос дальше

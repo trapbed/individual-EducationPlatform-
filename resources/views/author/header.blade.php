@@ -37,8 +37,9 @@
 
             <div class="df fdr_c ali_c g1_5">
                 <a title="Курсы" href="{{route('main_author')}}"><img class="w2 h1" src="{{asset('img/courses.png')}}"></a>
+                <a title="Картинки для уроков" href="{{route('get_images_lesson')}}"><img class="w2 h1" src="{{asset('img/img.png')}}"></a>
                 <a title="Уроки" href="{{route('main_admin')}}"><img class="w2 h2" src="{{asset('img/lessons.png')}}"></a>
-                <a title="Заявки" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/access.png')}}"></a>
+                <a title="Управление доступом-> Заявки" href="{{route('application_courses')}}"><img class="w2 h1" src="{{asset('img/access.png')}}"></a>
                 <a title="Отчеты" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/report.png')}}"></a>
             </div>
 
@@ -53,5 +54,8 @@
             @yield('content')
         </div>
     </div>
+    <?php
+        unset($errors);
+    ?>
 </body>
 </html>

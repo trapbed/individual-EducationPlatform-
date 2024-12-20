@@ -18,8 +18,8 @@
             </select>
             <select name="order" class="fsz_1 ff_mr c_dp w15 h1 paa_0_5 brc_lp bg_w br_1">
                 <option {{$old_order == "access DESC" ? "selected" : ""}} value="access DESC">Сначала популярные</option>
-                <option {{$old_order == "courses.created_at DESC" ? "selected" : ""}} value="courses.created_at DESC">Сначала новые</option>
-                <option {{$old_order == "courses.created_at ASC" ? "selected" : ""}} value="courses.created_at ASC">Сначала старые</option>
+                <option {{$old_order == "courses.created_at ASC" ? "selected" : ""}} value="courses.created_at ASC">Сначала новые</option>
+                <option {{$old_order == "courses.created_at DESC" ? "selected" : ""}} value="courses.created_at DESC ">Сначала старые</option>
                 <option {{$old_order == "title ASC" ? "selected" : ""}} value="title ASC">А-Я</option>
                 <option {{$old_order == "title DESC" ? "selected" : ""}} value="title DESC">Я-А</option>
             </select>
@@ -50,14 +50,25 @@
                     <div class="w7 ">{{$course->lesson_count}}</div>
                     <div class="w7 ">{{$course->student_count}}</div>
                     <?php
-                        $test = $course->test != null ? "&#10003;" : "";
-                        $access = $course->access == '1' ? "&#10003;" : "";
-                        $act1 = $course->access == "1" ? `Показать` : `Скрыть`;
+                        $test = $course->test != null ? "&#10003;" : "-";
+                        $access = $course->access == '1' ? "&#10003;" : "-";
+                        $act1 = $course->access == "1" ? "Показать" : "Скрыть";
+                        $act12 = $course->access == '1' ? '0' : '1';
+                        $color_btn = $course->access == '1'? 'btn_green': 'btn_red';
+                        $color = $course->access == '1'? 'bg_lg': 'bg_lr';
+
+                        if($course->appl == 1){
+                            $act1 = "В обработке";
+                            $color_btn = 'bg_lgr';
+                        }
                     ?>
                     <div class="w5 ">{{html_entity_decode($test)}}</div>
-                    <div class="w5 ">{{html_entity_decode($access)}}</div>
+                    <div class="w5"><div class="df w2 h2 ali_c jc_c br_1 {{$color}}">{{html_entity_decode($access)}}</div></div>
                     <div class="w10 "><a class="ff_mr fsz_1 c_dp" href="{{route('author_more_info_course', $course->id)}}">Подробнее</a></div>
-                    <div class="w15"><a class="ff_m fsz_0_8 c_dp w7  paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course_show', $course->id)}}">Редактировать</a></div>
+                    <div class="df fdr_r g1 w15 h2_5">
+                        <a class=" df ali_c jc_c ff_m fsz_0_8 h1 w6 paa_0_5 c_b  br_1 {{$color_btn}} td_n" href="{{$course->appl == 1 ? "" :route('send_access', ['course_id'=>$course->id, 'wish_access'=>$act12])}}">{{$act1}}</a>
+                        <a class="ff_m fsz_0_8 c_dp w7 paa_0_5 brc_lp  br_1 search_course td_n" href="{{route('update_course_show', $course->id)}}">Редактировать</a>
+                    </div>
                 </div>
                 @endforeach
             </div>

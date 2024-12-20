@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\CourseApplication;
 use App\Models\Lesson;
 
 use Auth;
@@ -40,14 +41,12 @@ class CourseController extends Controller
             'courses.test',
             'courses.created_at',
             'courses.access',
+            'courses.appl',
             DB::raw('COUNT(lessons.id) as lesson_count'));
         if(Auth::check()!= true || Auth::user()->role == 'student'){
             $all_access_courses = $all_access_courses->where('access','=', '1');
     
         }
-        
-        
-        
         if($request->search){
             $header = "Поиск '".$request->search."'";
             $old_search = $request->search;
@@ -94,6 +93,54 @@ class CourseController extends Controller
         
     }
 
+    
+    public function one_course_main($id_course){
+        $info_course = Course::select('courses.id', 'courses.title', 'categories.title as category','description','image','users.name as author','student_count', 'test')->where('courses.id','=', $id_course)
+        ->join('users', 'users.id', '=', 'courses.author')
+        ->join('categories', 'categories.id', '=', 'courses.category');
+
+        if($info_course->exists() == true){
+            $info_course= $info_course->get()[0];
+            return view('one_course', ['title'=>$info_course->title, 'course'=>$info_course, 'id'=>$id_course]);
+        }
+        else{
+            return redirect()->route('courses');
+        }
+    }
+
+    public function get_all_admin(){
+        $courses = Course::select('courses.id as course_id','courses.title as course_title','categories.title as category_title', 'description', 'users.name as author','access','test', 'courses.created_at')
+        ->JOIN('users','users.id','=', 'courses.author')
+        ->JOIN('categories','categories.id','=','courses.category')->get();
+        // dd(count($courses));
+        return view('admin/courses', ['courses'=>$courses]);
+    }
+    public function change_access_course($access, $id_course){
+        // dd($access, $id_course);
+        $update = Course::where('id', '=', $id_course)->update(['access'=>$access]);
+        $courses = Course::select('courses.id as course_id','courses.title as course_title','categories.title as category_title', 'description', 'users.name as author','access','test', 'courses.created_at')
+        ->JOIN('users','users.id','=', 'courses.author')
+        ->JOIN('categories','categories.id','=','courses.category')->get();
+        if($update){
+            return back()->with(['mess'=>'Доступ изменен!', 'courses'=>$courses]);
+        }
+        else{
+            return back()->with(['mess'=>'Не удалось изменить доступ!', 'courses'=>$courses]);
+        }
+        // return response()->json($request);
+    }
+
+    
+
+   
+// AUTHOR
+    public function author_more_info_course($id){
+        $course = Course::select('courses.id','courses.title', 'description', 'student_count', 'categories.title as category')->join('categories', 'courses.category', '=', 'categories.id')->where('courses.id', '=', $id)->get()[0];
+        $lessons = Lesson::select('*')->where('course_id', '=', $id)->get();
+        // dd($lessons);
+        $count_lessons = $lessons->count();
+        return view('author/one_course', ['course'=>$course, 'lessons'=>$lessons, 'count_lessons'=>$count_lessons]);
+    }
     public function create_course_show(){
         $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
         return view('author/create_course_show', ['categories'=>$categories]);
@@ -145,42 +192,6 @@ class CourseController extends Controller
             }
         }
     }
-    public function one_course_main($id_course){
-        $info_course = Course::select('courses.id', 'courses.title', 'categories.title as category','description','image','users.name as author','student_count', 'test')->where('courses.id','=', $id_course)
-        ->join('users', 'users.id', '=', 'courses.author')
-        ->join('categories', 'categories.id', '=', 'courses.category');
-
-        if($info_course->exists() == true){
-            $info_course= $info_course->get()[0];
-            return view('one_course', ['title'=>$info_course->title, 'course'=>$info_course, 'id'=>$id_course]);
-        }
-        else{
-            return redirect()->route('courses');
-        }
-    }
-    public function get_all_admin(){
-        $courses = Course::select('courses.id as course_id','courses.title as course_title','categories.title as category_title', 'description', 'users.name as author','access','test', 'courses.created_at')
-        ->JOIN('users','users.id','=', 'courses.author')
-        ->JOIN('categories','categories.id','=','courses.category')->get();
-        // dd(count($courses));
-        return view('admin/courses', ['courses'=>$courses]);
-    }
-
-    public function change_access_course($access, $id_course){
-        // dd($access, $id_course);
-        $update = Course::where('id', '=', $id_course)->update(['access'=>$access]);
-        $courses = Course::select('courses.id as course_id','courses.title as course_title','categories.title as category_title', 'description', 'users.name as author','access','test', 'courses.created_at')
-        ->JOIN('users','users.id','=', 'courses.author')
-        ->JOIN('categories','categories.id','=','courses.category')->get();
-        if($update){
-            return back()->with(['mess'=>'Доступ изменен!', 'courses'=>$courses]);
-        }
-        else{
-            return back()->with(['mess'=>'Не удалось изменить доступ!', 'courses'=>$courses]);
-        }
-        // return response()->json($request);
-    }
-
     function update_course_show($id){
         $categories = Category::select('id', 'title')->where('exist', '=', '1')->get();
         $course = Course::select('id','category','title','description','image')->where('id','=', $id)->get()[0];
@@ -246,22 +257,32 @@ class CourseController extends Controller
             }
         }
     }
-
-    public function author_more_info_course($id){
-        $course = Course::select('courses.id','courses.title', 'description', 'student_count', 'categories.title as category')->join('categories', 'courses.category', '=', 'categories.id')->where('courses.id', '=', $id)->get()[0];
-        $lessons = Lesson::select('*')->where('course_id', '=', $id)->get();
-        // dd($lessons);
-        $count_lessons = $lessons->count();
-        return view('author/one_course', ['course'=>$course, 'lessons'=>$lessons, 'count_lessons'=>$count_lessons]);
-    }
-// AUTHOR
     public function data_for_create_course($id){
         $course = Course::select('courses.*', DB::raw('COUNT(lessons.id) as lesson_count'))->where('courses.id', '=', $id)->leftJoin('lessons', 'lessons.course_id', '=', 'courses.id')->groupBy('courses.id')->get()[0];
         return view('author/create_lesson', ['course'=>$course]);
     }
 
-    public function application_courses(){
-        
+    public function send_access($course_id, $wish_access){
+        $create_appl = CourseApplication::insert([
+            'course_id'=>$course_id,
+            'wish_access'=>$wish_access
+        ]);
+        if($create_appl){
+            $u_course = Course::where('id', '=', $course_id)->update([
+                'appl'=>'1'
+            ]);
+            return redirect()->route('main_author')->withErrors(['success'=>'Заявка отправлена!']);
+        }else{
+            return redirect()->route('main_author')->withErrors(['error'=>'Не удалось отправить заявку!']);
+        }
+        // dd($course_id, $wish_access);
     }
     
+    public function application_courses(){
+        $author_appl_course = CourseApplication::select('course_applications.*', 'courses.title as course_title', 'users.id as id_user', 'users.name')->
+                              join('courses', 'courses.id', '=', 'course_applications.course_id')->
+                              join('users','users.id','=','courses.author')->
+                              where('users.id','=',Auth::user()->id)->get();
+        return view('author/applications_course', ['appls'=>$author_appl_course]);
+    }
 }

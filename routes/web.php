@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function(){
     });    
     
     Route::middleware('student')->group(function(){
+        Route::get('start_study/{id_course}', [CourseController::class, 'start_study'])->name('start_study');
+
         Route::get('student/account', function(){return view('student/account');})->name('student_account');
     });
 
@@ -65,6 +67,7 @@ Route::middleware('auth')->group(function(){
     
 
     Route::middleware('author')->group(function(){
+
         Route::get('/author/courses', [CourseController::class, 'main_courses'])->name('main_author');
         Route::get('/create_course_show', [CourseController::class,'create_course_show'])->name('create_course_show');
         Route::post('/create_course', [CourseController::class,'create_course'])->name('create_course');
@@ -76,9 +79,11 @@ Route::middleware('auth')->group(function(){
         Route::get('/remove_lesson/{id_less}/{id_course}', [LessonController::class, 'remove_lesson'])->name('remove_lesson');
         Route::get('/one_lesson/{id}', [LessonController::class, 'one_lesson'])->name('one_lesson');
 
-        Route::post('/application_courses', [CourseController::class, 'application_courses'])->name('application_courses');
         Route::post('/add_to_dir', [LessonController::class, 'add_to_dir'])->name('add_to_dir');
         Route::get('/get_images_lesson', [LessonController::class, 'images_lesson'])->name('get_images_lesson');
+        
+        Route::get('/application_courses', [CourseController::class, 'application_courses'])->name('application_courses');
+        Route::get('/send_access/{course_id}/{wish_access}', [CourseController::class, 'send_access'])->name('send_access');
     });
 });
 

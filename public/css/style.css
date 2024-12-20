@@ -578,6 +578,22 @@
     background-color: #54339e;
     color: #d0c4df;
 }
+.btn_green{
+    background-color: #cfdfc4;
+    color: #325b1e;
+}
+.btn_green:hover{
+    background-color: #325b1e;
+    color: white;
+}
+.btn_red{
+    background-color: #dfc4c4;
+    color: #5b1e1e;
+}
+.btn_red:hover{
+    background-color: #5b1e1e;
+    color: #f4f4f4;
+}
 .td_u{
     text-decoration: underline;
 }
@@ -601,6 +617,9 @@
 }
 .c_gr{
     color: rgba(128, 128, 128, 0.666);
+}
+.bg_lgr{
+    background-color: rgba(84, 84, 84, 0.4);
 }
 .bg_beige{
     background-color: #f1e0d7;

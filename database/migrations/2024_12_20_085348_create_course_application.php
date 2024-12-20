@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('course_id')->references('id')->on('courses');
             $table->enum('wish_access', ['1', '0']);
             $table->enum('status', ['Отправлена', 'Принята', 'Отклонена']);
+            $table->timestamps();
         });
     }
 

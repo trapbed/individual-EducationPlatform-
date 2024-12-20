@@ -23,7 +23,8 @@ return new class extends Migration
             $table->unsignedInteger('student_count')->default(0)->nullable(false);
             $table->json('test')->nullable();
             $table->json('answers')->nullable();
-            $table->enum('access', ['0','1'])->default('1');//1=>доступен
+            $table->enum('appl', ['0', '1'])->default('0');
+            $table->enum('access', ['0','1'])->default('0');//1=>доступен
             $table->timestamps();
         });
     }

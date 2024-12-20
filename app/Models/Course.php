@@ -18,6 +18,7 @@ class Course extends Model
         'student_count',
         'test',
         'answers',
+        'appl',
         'access'
     ];
 }

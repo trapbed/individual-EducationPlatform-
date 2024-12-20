@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'all_courses',
         'completed_courses',
         'blocked'
     ];

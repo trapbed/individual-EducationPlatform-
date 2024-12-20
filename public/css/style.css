@@ -185,6 +185,9 @@
 .w50{
     width: 50vmax;
 }
+.w52{
+    width: 52vmax;
+}
 .wmx_50{
     max-width: 50vmax;
 }
@@ -377,6 +380,12 @@
 .als_c{
     align-self: center;
 }
+.ali_str{
+    align-items: stretch;
+}
+.js_s{
+    justify-self: start;
+}
 .js_e{
     justify-self: end;
 }
@@ -418,6 +427,9 @@
 }
 .ptb_1{
     padding: 1vmax 0;
+}
+.ptb_2{
+    padding: 2vmax 0;
 }
 .plr_1{
     padding: 0 1vmax;
@@ -561,6 +573,14 @@
     background-color: #54339e;
     color: aliceblue;
 }
+.btn_w_lp{
+    background-color: white;
+    color: #54339e;
+}
+.btn_w_lp:hover{
+    background-color: #d0c4df;
+    color: #54339e;
+}
 .btn_dp_lp{
     background-color: #54339e;
     color: white;
@@ -619,7 +639,7 @@
     color: rgba(128, 128, 128, 0.666);
 }
 .bg_lgr{
-    background-color: rgba(84, 84, 84, 0.4);
+    background-color: rgba(132, 131, 131, 0.4);
 }
 .bg_beige{
     background-color: #f1e0d7;

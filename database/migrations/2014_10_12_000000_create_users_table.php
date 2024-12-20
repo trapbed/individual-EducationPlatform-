@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('role', ['admin','student','author'])->default('student');
             $table->string('password');
+            $table->json('all_courses')->nullable();
             $table->json('completed_courses')->nullable();
             $table->enum('blocked', ['0','1']);
             $table->timestamps();

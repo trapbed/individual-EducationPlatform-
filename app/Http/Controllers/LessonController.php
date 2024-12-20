@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -106,6 +108,52 @@ class LessonController extends Controller
         // dd($content);
         // dd($one_lesson);
 // @extends('author.header')resources/views/author/one_lesson.blade.php
+        
         return view('author/one_lesson',  ['lesson'=>$one_lesson, 'content'=>$array_content]);
+        
+    }
+
+    public function one_lesson_student($id, $course){
+        $completed = User::select('completed_courses')->where('id', '=', Auth::user()->id)->get()[0]->completed_courses;
+        $completed = json_decode($completed)->courses;
+        $completed = in_array($course, $completed);
+        // dd($completed);
+        $array_lessons = Lesson::select('id', 'title')->where('course_id','=', $course)->get();
+        $array_id = [];
+        $array_id_title = [];
+        $next_id = null;
+        $next_title = null;
+        $before_id = null;
+        $before_title = null;
+        foreach($array_lessons as $value){
+            array_push($array_id, intval($value->id));
+            $array_id_title[$value->id] = $value->title;
+        }
+        $current_key = array_search($id, $array_id); 
+        if($current_key < $array_lessons->count()-1){
+            $next_id = $array_id[$current_key+1];
+            $next_title = $array_id_title[$next_id];
+        }
+        if($current_key != 0){
+            $before_id = $array_id[$current_key-1];
+            $before_title = $array_id_title[$before_id];
+        }
+        
+        
+        // dd($before_id, $before_title);
+        
+        // $next = 
+        // dd($next_id, $next_title);
+        $one_lesson = Lesson::select('courses.id as course_id','lessons.id', 'lessons.title', 'courses.title as course', 'content')->join('courses', 'courses.id', '=', 'lessons.course_id')->where('lessons.id', '=', $id)->get()[0];
+        $content = array( json_decode(($one_lesson->content)));
+        $array_content = [];
+        foreach($content as $key=>$value){
+            foreach($value as $a=>$b){
+                // dump($a);
+                $array_content[$a] = get_object_vars($b);
+            }
+        }
+            
+        return view('student/one_lesson',  ['lesson'=>$one_lesson, 'content'=>$array_content, 'next_id'=>$next_id, 'next_title'=>$next_title, 'before_id'=>$before_id, 'before_title'=>$before_title, 'completed'=>$completed]);
     }
 }

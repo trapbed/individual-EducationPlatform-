@@ -58,9 +58,11 @@ Route::middleware('auth')->group(function(){
     });    
     
     Route::middleware('student')->group(function(){
-        Route::get('start_study/{id_course}', [CourseController::class, 'start_study'])->name('start_study');
-
-        Route::get('student/account', function(){return view('student/account');})->name('student_account');
+        Route::get('start_study/{id_course}', [UserController::class, 'start_study'])->name('start_study');
+        Route::get('complete_course/{id_course}', [UserController::class, 'complete_course'])->name('complete_course');
+        Route::get('one_lesson_student/{id}/{course}', [LessonController::class, 'one_lesson_student'])->name('one_lesson_student');
+        // Route::get('student/account', function(){return view('student/account');})->name('student_account');
+        Route::get('student/account', [UserController::class, 'account_info'])->name('student_account');
     });
 
     // $id_user, $id_appl, $role, $status_appl

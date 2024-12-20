@@ -95,13 +95,38 @@ class CourseController extends Controller
 
     
     public function one_course_main($id_course){
+        $has = false;
+        $lessons = false;
+        $complete = false;
         $info_course = Course::select('courses.id', 'courses.title', 'categories.title as category','description','image','users.name as author','student_count', 'test')->where('courses.id','=', $id_course)
         ->join('users', 'users.id', '=', 'courses.author')
         ->join('categories', 'categories.id', '=', 'courses.category');
 
+        if(Auth::check()){
+            $all_courses = Auth::user()->all_courses;
+            if($all_courses != null){
+                $all_courses = json_decode($all_courses);
+                $all_courses = $all_courses->courses;
+                $has = in_array(intval($id_course), $all_courses);
+                // dump($has);
+                // dd($all_courses,intval($id_course), [$all_courses], $has);
+            }
+            $competed_courses = Auth::user()->completed_courses;
+            if($competed_courses !=  null){
+                $competed_courses = json_decode($competed_courses);
+                $competed_courses = $competed_courses->courses;
+                $complete = in_array(intval($id_course), $competed_courses);
+                // dd($complete);
+            }
+        }
+        if($has){
+            $lessons = Lesson::select('id','title')->where('course_id', '=', $id_course)->get();
+        }
+        // // dd($lessons);
+
         if($info_course->exists() == true){
             $info_course= $info_course->get()[0];
-            return view('one_course', ['title'=>$info_course->title, 'course'=>$info_course, 'id'=>$id_course]);
+            return view('one_course', ['title'=>$info_course->title, 'course'=>$info_course, 'id'=>$id_course, 'has'=>$has, 'lessons'=>$lessons, 'complete'=>$complete]);
         }
         else{
             return redirect()->route('courses');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,12 @@ use App\Models\UserApplication;
 class UserController extends Controller
 {
     //
+    public function account_info(){
+        $completed_c = Auth::user()->completed_courses;
+        $all_c = Auth::user()->all_courses;
+        return view('student/account');
+    }
+
     public function all_users_admin(){
         $all_users = User::select('id','name','email','role','password', 'blocked')->get();
         return view('admin/main', ['users'=>$all_users]);
@@ -49,5 +56,68 @@ class UserController extends Controller
             $update_user_appl = UserApplication::where('id','=', $id_appl)->update(['status_appl'=>$status_appl]);
             return back()->with(['mess'=>'Успешная отмена заявки!']);
         }
+    }
+
+    public function start_study($id_course){
+        $old_array = User::select('all_courses')->where('id', '=', Auth::user()->id)->get()[0]->all_courses;
+        dump($old_array);
+        if($old_array == null){
+            $new_array['courses'] = [$id_course];
+            $new_array = json_encode($new_array);
+            // dd($new_array);
+        }
+        else{
+            $old_array = json_decode($old_array)->courses;
+            $new_array['courses'] = [];
+            foreach($old_array as $oa){
+                array_push($new_array['courses'], intval($oa));
+            }
+
+            array_push($new_array['courses'], intval($id_course));
+            $new_array = json_encode($new_array);
+            
+        }
+        $update_all_courses = User::where('id', '=', Auth::user()->id)->update([
+            'all_courses'=>$new_array
+        ]);
+        $old_student_count = Course::select('student_count')->where('id', '=', $id_course)->get()[0]->student_count;
+        $update_course_student_count = Course::where('id', '=', $id_course)->update([
+            'student_count'=>$old_student_count+1
+        ]);
+        if($update_all_courses){
+            return redirect()->route('one_course_main', ['id_course'=>$id_course])->withErrors(['success'=>'Вы получили этот курс!']);
+        }
+        else{
+            return back()->withErrors(['success'=>'Не удалось получить этот курс!']);
+        }
+    }
+
+    public function complete_course($id_course){
+        $complete_check = User::where('id', '=', Auth::user()->id)->select()->get()[0]->completed_courses;
+        // $complete_courses = [];
+        if($complete_check == null){
+            $complete_courses['courses'] = [$id_course];
+            $complete_courses = json_encode($complete_courses);
+        }
+        else{
+            $complete_check = json_decode($complete_check)->courses;
+            $complete_courses['courses'] = [];
+            foreach($complete_check as $co){
+                array_push($complete_courses['courses'], intval($co));
+            }
+            array_push($complete_courses['courses'], intval($id_course));
+            $complete_courses = json_encode($complete_courses);
+            // dd($complete_courses, $id_course);
+        }
+        $update_completed_courses = User::where('id', '=', Auth::user()->id)->update([
+            'completed_courses'=>$complete_courses
+        ]);
+        if($update_completed_courses){
+            return redirect()->route('one_course_main', ['id_course'=>$id_course])->withErrors(['success'=>'Вы завершили этот курс!']);
+        }
+        else{
+            return back()->withErrors(['success'=>'Не удалось завершить этот курс!']);
+        }
+        // dd($id_course, $complete_check);
     }
 }

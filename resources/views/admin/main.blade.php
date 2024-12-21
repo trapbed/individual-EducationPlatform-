@@ -3,7 +3,10 @@
 @section('title', 'Пользователи')
 @section('content')
 
-<div class="df fdr_r g2"><a class="td_n fsz_1" href="{{route('main_admin')}}">Пользователи</a><a class="td_n fsz_1" href="{{route('users_appl')}}">Заявки</a></div>
+<div class="df fdr_r g2">
+    <a class="td_n fsz_1_5" href="{{route('main_admin')}}">Пользователи</a>
+    {{--<a class="td_n fsz_1" href="{{route('users_appl')}}">Заявки</a>--}}
+</div>
 
 
 @if (count($users)>0)

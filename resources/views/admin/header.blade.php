@@ -36,14 +36,15 @@
     
 
             <div class="df fdr_c ali_c g1_5">
-                <a title="Пользователи" href="{{route('main_admin')}}"><img class="w1_5 h1_5" src="{{asset('img/users.png')}}"></a>
+                <a title="Пользователи" href="{{route('main_admin')}}"><img class="w2 h2" src="{{asset('img/group.png')}}"></a>
                 <a title="Категории" href="{{route('categories_admin')}}"><img class="w2 h2" src="{{asset('img/categories.png')}}"></a>
                 <a title="Курсы" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/courses.png')}}"></a>
                 <a title="Отчеты" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/report.png')}}"></a>
                 {{--<a title="Уроки" href="{{route('main_admin')}}"><img class="w2 h2" src="{{asset('img/lessons.png')}}"></a>--}}
             </div>
 
-            <div class="pos_a b_1">
+            <div class="df fdr_c pos_a b_1 g2">
+                <a href="{{route('student_account')}}"><img class="w1_5" src="{{asset('img/users.png')}}" alt="Аккаунт"></a>
                 <a title="Выйти" href="{{route('logout')}}"><img class="w1_5 h1_5" src="{{asset('img/logout.png')}}" alt="logout"></a>
             </div>
     

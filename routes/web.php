@@ -34,6 +34,8 @@ Route::middleware('no_auth')->group(function(){
 
     Route::get('/signup', function(){return view('signup');})->name('signup_form');
     Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+    Route::get('/recover_acc', function(){return view('recover_acc');})->name('recover_acc');
+    Route::post('/recover_acc', [AuthController::class, 'recover_acc'])->name('recover_acc');
 });
 
 // Route::post('/', [AuthController::class, 'login_modal']);
@@ -41,6 +43,8 @@ Route::middleware('no_auth')->group(function(){
 
 Route::middleware('auth')->group(function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('account', [UserController::class, 'account_info'])->name('student_account');
+    Route::post('edit_account', [UserController::class,'edit_account'])->name('edit_account');
     
 
     Route::middleware('admin')->group(function(){
@@ -55,15 +59,15 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/edit_cat_show/{id}', [CategoryController::class, 'edit_cat_show'])->name('edit_cat_show');
         Route::post('/admin/edit_cat', [CategoryController::class, 'edit_cat'])->name('edit_cat');
         Route::get('change_exist_category/{exist}/{id}', [CategoryController::class, 'change_exist_category'])->name('change_exist_category');
+        Route::get('/set_access/{id_course}/{id_appl}/{wish}/{act}', [CourseController::class, 'set_access'])->name('set_access');
+
+        Route::get('/course_applications', [CourseController::class, 'get_course_applications'])->name('course_applications');
     });    
     
     Route::middleware('student')->group(function(){
         Route::get('start_study/{id_course}', [UserController::class, 'start_study'])->name('start_study');
         Route::get('complete_course/{id_course}', [UserController::class, 'complete_course'])->name('complete_course');
         Route::get('one_lesson_student/{id}/{course}', [LessonController::class, 'one_lesson_student'])->name('one_lesson_student');
-        // Route::get('student/account', function(){return view('student/account');})->name('student_account');
-        Route::get('student/account', [UserController::class, 'account_info'])->name('student_account');
-        Route::post('edit_account', [UserController::class,'edit_account'])->name('edit_account');
     });
 
     // $id_user, $id_appl, $role, $status_appl

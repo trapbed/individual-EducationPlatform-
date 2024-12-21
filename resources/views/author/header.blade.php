@@ -43,7 +43,8 @@
                 {{--<a title="Отчеты" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/report.png')}}"></a>--}}
             </div>
 
-            <div class="pos_a b_1">
+            <div class="df fdr_c pos_a b_1 g2">
+                <a href="{{route('student_account')}}"><img class="w1_5" src="{{asset('img/users.png')}}" alt="Аккаунт"></a>
                 <a title="Выйти" href="{{route('logout')}}"><img class="w1_5 h1_5" src="{{asset('img/logout.png')}}" alt="logout"></a>
             </div>
     

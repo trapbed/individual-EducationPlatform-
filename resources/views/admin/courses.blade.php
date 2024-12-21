@@ -3,7 +3,7 @@
 @section('title', 'Курсы')
 @section('content')
 
-<div class="df fdr_r g2 pos_f bg_w"><a class="lh_3 fsz_1_5 td_n" href="{{route('courses_admin')}}">Курсы</a><a class="lh_3 fsz_1_5 td_n" href="">Заявки</a></div>
+<div class="df fdr_r g2 pos_f bg_w"><a class="lh_3 fsz_1_5 td_n" href="{{route('courses_admin')}}">Курсы</a><a class="lh_3 fsz_1_5 td_n" href="{{route('course_applications')}}">Заявки</a></div>
 
 
 @if (count($courses)>0)

@@ -208,8 +208,9 @@ class CourseController extends Controller
             ]);
             // dd($create);
             if($create){
+                
                 $image = $request->file('image')->getClientOriginalName();
-                $upload = $request->file('image')->move(public_path()."/img/courses/", $image);
+                $upload = $request->file('image')->move(public_path()."/img/courses", $image);
                 return redirect()->route('main_author')->withErrors(['success'=>'Успешное создание курса!']);
             }
             else{
@@ -268,7 +269,7 @@ class CourseController extends Controller
                     'image'=>$request->file('image')->getClientOriginalName()
                 ]);
                 $image = $request->file('image')->getClientOriginalName();
-                $upload = $request->file('image')->move(public_path()."/img/courses/", $image);
+                $upload = $request->file('image')->move(public_path()."/img/courses", $image);
             }
             if($update){
                 $categories = Category::select('id', 'title')->get();
@@ -296,9 +297,9 @@ class CourseController extends Controller
             $u_course = Course::where('id', '=', $course_id)->update([
                 'appl'=>'1'
             ]);
-            return redirect()->route('main_author')->withErrors(['success'=>'Заявка отправлена!']);
+            return redirect()->route('main_author')->withErrors(['success'=>'Заявка отправлена!'])->withInput();
         }else{
-            return redirect()->route('main_author')->withErrors(['error'=>'Не удалось отправить заявку!']);
+            return redirect()->route('main_author')->withErrors(['error'=>'Не удалось отправить заявку!'])->withInput();
         }
         // dd($course_id, $wish_access);
     }
@@ -309,5 +310,43 @@ class CourseController extends Controller
                               join('users','users.id','=','courses.author')->
                               where('users.id','=',Auth::user()->id)->get();
         return view('author/applications_course', ['appls'=>$author_appl_course]);
+    }
+
+    public function get_course_applications(){
+        $applications = CourseApplication::select('course_applications.id', 'courses.id as id_course', 'wish_access', 'courses.title as course', 'course_applications.created_at')->join('courses', 'courses.id', '=', 'course_applications.course_id')->where('course_applications.status', '=', 'Отправлена')->get();
+        return view('/admin/course_applications', ['appls'=>$applications, 'count'=>$applications->count()]);
+    }
+
+    public function set_access($id_course, $id_appl, $wish, $act){
+        if($act == 'Отклонена'){
+            $upd_appl = CourseApplication::where('id', '=', $id_appl)->update([
+                'status'=>$act
+            ]);
+            if($upd_appl){
+                return back()->withErrors(['success'=>'Заявка отклонена!']);
+            }
+            else{
+                return back()->withErrors(['error'=>'Не удалось отклонить заявку!']);
+            }
+        }
+        else{
+            $upd_course = Course::where('id', '=', $id_course)->update([
+                'access'=>$wish
+            ]);
+            if($upd_course){
+                $upd_appl = CourseApplication::where('id', '=', $id_appl)->update([
+                    'status'=>$act
+                ]);
+                if($upd_appl){
+                    return back()->withErrors(['success'=>'Заявка принята!']);
+                }
+                else{
+                    return back()->withErrors(['error'=>'Не удалось принять заявку!']);
+                }
+            }
+            else{
+                return back()->withErrors(['error'=>'Не удалось принять заявку!']);
+            }
+        }
     }
 }

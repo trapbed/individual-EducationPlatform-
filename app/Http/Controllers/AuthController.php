@@ -108,4 +108,38 @@ class AuthController extends Controller
             return redirect()->route('login');
     }
 
+    public function recover_acc(Request $request){
+        $check_email = User::where('email', '=', $request->email)->exists();
+        if($check_email){
+            $array = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 
+                      'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', 0, 1, 2,3, 4, 5, 6, 7, 8, 9 ];
+
+            $random = array_rand($array, 8);
+            $new_pass = '';
+
+            foreach($random as $r){
+                $new_pass.=$array[$r];
+            }
+
+            $set_pass = User::where('email', '=', $request->email)->update([
+                'password'=>Hash::make($new_pass)
+            ]);
+            if($set_pass){
+                if(mail($request->email, "Временный пароль", "Ваш временный пароль ".$new_pass)){
+                    return redirect()->route('login')->withErrors(['err'=>'Сообщение с временным паролем отправлено!']);
+                }
+                else{
+                    return back()->withErrors(['err'=>'Не удалось отправить временный пароль!']);
+                }
+            }
+            else{
+                return back()->withErrors(['mess'=>'Не удалось сохранить временный пароль!']);
+            }
+        }else{
+            return back()->withErrors(['error'=>'Нет такого пользователя!']);
+        }
+    
+
+    }
+
 }

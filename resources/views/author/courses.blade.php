@@ -52,9 +52,9 @@
                     <?php
                         $test = $course->test != null ? "&#10003;" : "-";
                         $access = $course->access == '1' ? "&#10003;" : "-";
-                        $act1 = $course->access == "1" ? "Показать" : "Скрыть";
+                        $act1 = $course->access == "1" ? "Скрыть" : "Показать";
                         $act12 = $course->access == '1' ? '0' : '1';
-                        $color_btn = $course->access == '1'? 'btn_green': 'btn_red';
+                        $color_btn = $course->access == '1'? 'btn_red': ' btn_green';
                         $color = $course->access == '1'? 'bg_lg': 'bg_lr';
 
                         if($course->appl == 1){

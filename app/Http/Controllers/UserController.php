@@ -15,10 +15,15 @@ class UserController extends Controller
 {
     //
     public function account_info(){
-        $completed_c = count(json_decode(Auth::user()->completed_courses)->courses);
-        $all_c = count(json_decode(Auth::user()->all_courses)->courses);
+        $all_c = false;
+        $completed_c = false;
+        if(Auth::user()->role == 'student'){
+            $completed_c = count(json_decode(Auth::user()->completed_courses)->courses);
+            $all_c = count(json_decode(Auth::user()->all_courses)->courses);
+        }
+       
         // dump($completed_c, $all_c);
-        return view('student/account', ['all_c'=>$all_c, 'completed_c'=>$completed_c]);
+        return view(Auth::user()->role.'/account', ['all_c'=>$all_c, 'completed_c'=>$completed_c]);
     }
 
     public function edit_account(Request $request){

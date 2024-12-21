@@ -16,7 +16,8 @@
                 <div class="df fdr_r g4 ff_mr fsz_1">
                     <?php
                         $wish_btn = $appl->wish_access == '1' ? 'Вывод' : 'Сокрытие';
-                        $updated_at = $appl->updated_at == null ? '-' : $appl->updated_at;
+                        $updated_at = $appl->updated_at == null || $appl->status == 'Отправлена' ? '-' : $appl->updated_at;
+                        
                     ?>
                     <div class="w12">{{$appl->course_title}}</div>
                     <div class="w8">{{$wish_btn}}</div>

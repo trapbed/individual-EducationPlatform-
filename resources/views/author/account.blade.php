@@ -1,4 +1,4 @@
-@extends('header')
+@extends('author.header')
 @section('title', 'Аккаунт')
 @section('content')
     <div class="h4 w94_9"></div>
@@ -19,14 +19,6 @@
             <div class="df fdr_r g1">
                 <span class="w18">Зарегистрирован с:</span>
                 <span>{{date("d-m-Y",(strtotime(Auth::user()->created_at)))}}</span>
-            </div>
-            <div class="df fdr_r g1">
-                <span class="w18">Начато курсов</span>
-                <span>{{$all_c}}</span>
-            </div>
-            <div class="df fdr_r g1">
-                <span class="w18">Завершено</span>
-                <span>{{$completed_c}}</span>
             </div>
         </div>
         <form class="df fdr_c g1 brc_lp paa_1 br_03" action="{{route('edit_account')}}" method="POST">

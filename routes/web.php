@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('account', [UserController::class, 'account_info'])->name('student_account');
     Route::post('edit_account', [UserController::class,'edit_account'])->name('edit_account');
-    
+    Route::post('/new_pass', [UserController::class, 'new_pass'])->name('new_pass');
 
     Route::middleware('admin')->group(function(){
         Route::get('admin/main', [UserController::class, 'all_users_admin'])->name('main_admin');

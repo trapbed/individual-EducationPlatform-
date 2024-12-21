@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
 use App\Models\User;
@@ -99,6 +100,34 @@ class UserController extends Controller
     public function users_appl(){
         $users_appl = UserApplication::select('user_applications.id','users.name', 'users.id as user_id','current_status','date', 'status_appl','wish_status')->join('users','users.id', '=', 'user_applications.user_id')->orderBy('date')->get();
         return view('admin/users_appl', ['users'=>$users_appl]);
+    }
+
+    public function new_pass(Request $request){
+        $data = [
+            'password'=>$request->password
+        ];
+        $rules = [
+            'password'=>'required|min:6'
+        ];
+        $mess = [
+            'password.required'=>'Заполните пароль!',
+            'password.min'=>'Минимальная длина пароля- 6 символов!',
+        ];
+        $validate = Validator::make($data, $rules, $mess);
+        if($validate->fails()){
+            return back()->withErrors($validate);
+        }
+        else{
+            $new_pass = User::where('id', '=', Auth::user()->id)->update([
+                'password'=>Hash::make($request->password)
+            ]);
+            if($new_pass){
+                return back()->withErrors(['success'=>'Успешное изменение пароля!']);
+            }
+            else{
+                return back()->withErrors(['error'=>'Не удалось изменить пароль!']);
+            }
+        }
     }
 // 'id_user'=>$user->user_id, 'id_appl'=>$user->id, 'role'=>$user->wish_status, 'status_appl'=>'Принята'
     public function change_role($id_user, $id_appl, $role, $status_appl){

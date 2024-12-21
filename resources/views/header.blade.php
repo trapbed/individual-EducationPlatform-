@@ -20,7 +20,7 @@
         <div class="df fdr_r g3 ali_c">
             <a class="td_n df fdr_r g1 ali_c" href="{{route('main')}}"><img class="w2_5 h2_5" src="{{asset('img/logo.png')}}" alt="LOGO"><span class="fsz_1 ff_m c_dp">Лига знаний</span></a>
             <a class="td_n ff_m c_dp fsz_1" href="{{route('courses')}}">Все курсы</a>
-            <a class="td_n ff_m c_dp fsz_1" href="{{route('main')}}">Категории</a>
+            {{--<a class="td_n ff_m c_dp fsz_1" href="{{route('categories_main')}}">Категории</a>--}}
         </div>
         <div class="df fdr_r g1 ali_c">
             @guest
@@ -28,7 +28,6 @@
                 <a class="btn_purple td_n ff_m c_dp fsz_1" href="{{route('login')}}">Войти</a>
             @endguest
             @auth
-                <a class="td_n ff_m c_dp fsz_1" href="{{route('main')}}">Мои курсы</a>
                 <a class="td_n ff_m c_dp fsz_1" href="{{route('student_account')}}">Аккаунт</a>
                 <a class="td_n ff_m c_dp fsz_1" href="{{route('logout')}}"><img class="w1_5 h1_5" src="{{asset('img/logout.png')}}" alt=""></a>
 

@@ -15,7 +15,6 @@
                 <td>Описание</td>
                 <td>Автор</td>
                 <td>Дата создания</td>
-                <td>Тест</td>
                 <td>Доступ</td>
                 <!-- <td>Действия</td> -->
             </tr>
@@ -36,7 +35,6 @@
                   <td onclick=""  title="{{$course->description}}">Смотреть</td>
                   <td>{{$course->author}}</td>
                   <td>{{$course->created_at}}</td>
-                  <td class="h3">{{html_entity_decode($test)}}</td>
                   <td><a class="fsz_0_8 br_03 ff_mr {{$color_btn}} {{$bg_color_btn}} td_n paa_0_3" href="{{route('change_access_course',['access'=> $access, 'id_course'=>$course->course_id])}}">{{$btn_access_title}}</a></td>
                   <!-- <td class="df fdr_r g1 ali_c b_0 h3 "><button class="fsz_1 ff_mr">Редактировать</button></td> -->
                 </tr>

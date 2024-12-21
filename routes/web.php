@@ -25,6 +25,7 @@ Route::middleware('no_admin_no_author')->group(function(){
     Route::get('/', [CourseController::class, 'main'])->name('main');
     Route::get('/courses/{search?}/{category?}/{order?}', [CourseController::class, 'main_courses'])->name('courses');
     Route::get('/one_course_main/{id_course}', [CourseController::class, 'one_course_main'])->name('one_course_main');
+    Route::get('/categories_main', [CategoryController::class, 'categories_main'])->name('categories_main');
 });
     
 
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function(){
         Route::get('start_study/{id_course}', [UserController::class, 'start_study'])->name('start_study');
         Route::get('complete_course/{id_course}', [UserController::class, 'complete_course'])->name('complete_course');
         Route::get('one_lesson_student/{id}/{course}', [LessonController::class, 'one_lesson_student'])->name('one_lesson_student');
+        Route::get('/my_courses', [CourseController::class, 'my_courses'])->name('my_courses');
     });
 
     // $id_user, $id_appl, $role, $status_appl

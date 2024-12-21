@@ -149,7 +149,7 @@ class UserController extends Controller
 
     public function start_study($id_course){
         $old_array = User::select('all_courses')->where('id', '=', Auth::user()->id)->get()[0]->all_courses;
-        dump($old_array);
+        // dump($old_array);
         if($old_array == null){
             $new_array['courses'] = [$id_course];
             $new_array = json_encode($new_array);

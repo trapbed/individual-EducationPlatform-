@@ -39,7 +39,6 @@
                 <a title="Пользователи" href="{{route('main_admin')}}"><img class="w2 h2" src="{{asset('img/group.png')}}"></a>
                 <a title="Категории" href="{{route('categories_admin')}}"><img class="w2 h2" src="{{asset('img/categories.png')}}"></a>
                 <a title="Курсы" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/courses.png')}}"></a>
-                <a title="Отчеты" href="{{route('courses_admin')}}"><img class="w2 h1" src="{{asset('img/report.png')}}"></a>
                 {{--<a title="Уроки" href="{{route('main_admin')}}"><img class="w2 h2" src="{{asset('img/lessons.png')}}"></a>--}}
             </div>
 

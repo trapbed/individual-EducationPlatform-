@@ -64,7 +64,7 @@ class LessonController extends Controller
         foreach($imgs as $img){
             if(gettype($img) == 'array'){
                 foreach($img as $key=>$value){
-                    dump($value);
+                    // dump($value);
                     $array_data[$key] = ["img"=>$value->getClientOriginalName()];
                 }
             }
@@ -115,8 +115,11 @@ class LessonController extends Controller
 
     public function one_lesson_student($id, $course){
         $completed = User::select('completed_courses')->where('id', '=', Auth::user()->id)->get()[0]->completed_courses;
-        $completed = json_decode($completed)->courses;
-        $completed = in_array($course, $completed);
+        if($completed != null){
+            $completed = json_decode($completed)->courses;
+            $completed = in_array($course, $completed);
+        }
+        
         // dd($completed);
         $array_lessons = Lesson::select('id', 'title')->where('course_id','=', $course)->get();
         $array_id = [];

@@ -36,7 +36,6 @@
                     <div class="w12 ">Категория</div><!--w10-->
                     <div class="w7 ">Уроков</div><!--w7-->
                     <div class="w7 ">Студенты</div><!--w7-->
-                    <div class="w5 ">Тест</div><!--w4-->
                     <div class="w5 ">Доступ</div><!--w5-->
                     <div class="w10 ">Подробнее</div><!--w5-->
                     <div class="w15">Действия</div><!--w14-->
@@ -62,7 +61,6 @@
                             $color_btn = 'bg_lgr';
                         }
                     ?>
-                    <div class="w5 ">{{html_entity_decode($test)}}</div>
                     <div class="w5"><div class="df w2 h2 ali_c jc_c br_1 {{$color}}">{{html_entity_decode($access)}}</div></div>
                     <div class="w10 "><a class="ff_mr fsz_1 c_dp" href="{{route('author_more_info_course', $course->id)}}">Подробнее</a></div>
                     <div class="df fdr_r g1 w15 h2_5">

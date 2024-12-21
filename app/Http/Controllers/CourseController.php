@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Category;
 use App\Models\CourseApplication;
 use App\Models\Lesson;
+use App\Models\User;
 
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,24 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
+    public function my_courses(){
+        $completed_arr = [];
+        $courses = Course::select('*');
+        $completed = json_decode(User::select('completed_courses')->where('id', '=', Auth::user()->id)->get()[0]->completed_courses)->courses;
+        foreach($completed as $c){
+            // dump($completed);
+            $courses_completed = $courses->where('id', '=', $c);
+        }
+        $courses_completed = $courses_completed->get();
+
+        $all = json_decode(User::select('all_courses')->where('id', '=', Auth::user()->id)->get()[0]->all_courses)->courses;
+        foreach($all as $a){
+            $courses_all = $courses->where('id', '=', $c);
+        }
+        $courses_all = $courses_all->get();
+        // dump($courses_all, $courses_completed, $all);
+        // foreach
+    }
     //main
     public function main(){
         $newest_course = Course::select('courses.id','categories.title as category', 'courses.title','description')->where('access', '=', '1')->join('categories', 'categories.id', '=', 'courses.category')->orderBy('student_count', 'DESC')->limit(5)->get();
